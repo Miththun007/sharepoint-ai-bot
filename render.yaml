@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: sharepoint-ai-bot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 app:app
+    plan: free
+    envVars:
+      - key: AZURE_TENANT_ID
+        value: 08a7d6c3-ef04-48a8-be88-dc96b69ab9a4
+      - key: AZURE_CLIENT_ID
+        value: 95e38cb9-5cd8-4272-a17b-3b8deffb16c9
+      - key: AZURE_CLIENT_SECRET
+        sync: false
+      - key: SHAREPOINT_HOSTNAME
+        value: veeleaddev.sharepoint.com
+      - key: SHAREPOINT_SITE_PATH
+        value: /sites/AISearchDev
+      - key: SHAREPOINT_SITE_URL
+        value: https://veeleaddev.sharepoint.com/sites/AISearchDev
+      - key: AZURE_OPENAI_ENDPOINT
+        value: https://aoai-voice-processed-demo.openai.azure.com/
+      - key: AZURE_OPENAI_API_KEY
+        sync: false
+      - key: AZURE_OPENAI_DEPLOYMENT
+        value: gpt-4o-mini
+      - key: AZURE_OPENAI_API_VERSION
+        value: 2024-08-01-preview
