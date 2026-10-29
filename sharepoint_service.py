@@ -382,6 +382,56 @@ class SharePointService:
             "chunks_added": len(new_chunks)
         }
 
+    def delete_document(self, drive_id: str, item_id: str, file_name: str = "") -> Dict[str, Any]:
+        """Delete a document from SharePoint drive and purge its chunks from RAG index."""
+        token = self.get_access_token()
+        headers = {"Authorization": f"Bearer {token}"}
+        delete_url = f"{GRAPH_API_BASE}/drives/{drive_id}/items/{item_id}"
+
+        # 1. Attempt Graph API delete
+        graph_deleted = False
+        try:
+            resp = requests.delete(delete_url, headers=headers, timeout=20)
+            if resp.status_code in (200, 204):
+                graph_deleted = True
+                logger.info(f"Deleted item {item_id} from SharePoint drive {drive_id}")
+            else:
+                logger.warning(f"Graph API delete returned {resp.status_code}: {resp.text}")
+        except Exception as e:
+            logger.warning(f"Error calling Graph API delete: {e}")
+
+        # 2. Remove file from memory
+        removed_file_name = file_name
+        if drive_id in self.files_by_drive:
+            new_files = []
+            for f in self.files_by_drive[drive_id]:
+                if f.get("id") == item_id or (file_name and f.get("name") == file_name):
+                    removed_file_name = f.get("name", file_name)
+                else:
+                    new_files.append(f)
+            self.files_by_drive[drive_id] = new_files
+
+        # 3. Remove chunks from memory
+        before_chunks = len(self.document_chunks)
+        self.document_chunks = [
+            c for c in self.document_chunks
+            if c.get("file_id") != item_id and (not removed_file_name or c.get("file_name") != removed_file_name)
+        ]
+        chunks_removed = before_chunks - len(self.document_chunks)
+
+        # 4. Rebuild index & persist cache
+        self.index_manager.set_documents(self.document_chunks)
+        self._save_cache()
+
+        logger.info(f"Successfully purged {chunks_removed} chunks for file '{removed_file_name}'")
+        return {
+            "success": True,
+            "graph_deleted": graph_deleted,
+            "file_name": removed_file_name,
+            "chunks_removed": chunks_removed,
+            "remaining_chunks": len(self.document_chunks)
+        }
+
     def sync_all(self, force_refresh: bool = False) -> Dict[str, Any]:
         """Perform a full synchronization of SharePoint lists, libraries, and files."""
         if self.is_syncing:
