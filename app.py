@@ -178,6 +178,20 @@ def upload_file():
         logger.exception("Upload failed")
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/libraries/<drive_id>/files/<item_id>", methods=["DELETE", "POST"])
+def delete_library_file(drive_id, item_id):
+    """Delete a file from SharePoint document library and purge its chunks from RAG index."""
+    file_name = request.args.get("file_name", "")
+    if not file_name and request.is_json:
+        file_name = request.json.get("file_name", "")
+
+    try:
+        res = sp_service.delete_document(drive_id, item_id, file_name=file_name)
+        return jsonify(res)
+    except Exception as e:
+        logger.exception("Delete file failed")
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/chat", methods=["POST"])
 def chat():
     """Standard non-streaming chat endpoint."""
