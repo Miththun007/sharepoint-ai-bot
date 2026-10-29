@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SharePoint AI Policy & Knowledge Base Assistant | Veelead Solutions</title>
+  <title>SharePoint AI Policy & Knowledge Base Assistant</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Marked.js for Markdown -->
@@ -15,25 +15,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
+    /* Monochrome Scrollbars */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #0f172a;
+      background: #000000;
     }
     ::-webkit-scrollbar-thumb {
-      background: #334155;
+      background: #27272a;
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
+      background: #52525b;
     }
 
-    /* Markdown Styling */
+    /* High Contrast Black & White Markdown Styling */
     .markdown-body {
-      color: #e2e8f0;
-      line-height: 1.6;
+      color: #f4f4f5;
+      line-height: 1.65;
       font-size: 0.95rem;
     }
     .markdown-body p {
@@ -43,8 +44,8 @@
       margin-bottom: 0;
     }
     .markdown-body pre {
-      background-color: #0b1120;
-      border: 1px solid #1e293b;
+      background-color: #050505;
+      border: 1px solid #27272a;
       border-radius: 0.5rem;
       padding: 0.85rem;
       overflow-x: auto;
@@ -55,10 +56,12 @@
       font-size: 0.9em;
     }
     .markdown-body p code {
-      background: #1e293b;
+      background: #18181b;
+      border: 1px solid #27272a;
       padding: 0.15rem 0.35rem;
       border-radius: 0.25rem;
-      color: #38bdf8;
+      color: #ffffff;
+      font-weight: 500;
     }
     .markdown-body ul, .markdown-body ol {
       margin-left: 1.5rem;
@@ -74,7 +77,7 @@
       font-weight: 700;
       margin-top: 1rem;
       margin-bottom: 0.5rem;
-      color: #f8fafc;
+      color: #ffffff;
     }
     .markdown-body table {
       width: 100%;
@@ -83,32 +86,35 @@
       font-size: 0.88rem;
     }
     .markdown-body th {
-      background-color: #1e293b;
-      border: 1px solid #334155;
-      padding: 0.5rem 0.75rem;
+      background-color: #18181b;
+      border: 1px solid #3f3f46;
+      padding: 0.6rem 0.8rem;
       text-align: left;
-      color: #93c5fd;
+      color: #ffffff;
+      font-weight: 600;
     }
     .markdown-body td {
-      border: 1px solid #334155;
-      padding: 0.45rem 0.75rem;
-      color: #cbd5e1;
+      border: 1px solid #27272a;
+      padding: 0.5rem 0.8rem;
+      color: #e4e4e7;
     }
     .markdown-body tr:nth-child(even) {
-      background-color: rgba(30, 41, 59, 0.4);
+      background-color: #0d0d0f;
     }
     .markdown-body blockquote {
-      border-left: 4px solid #0284c7;
-      padding-left: 0.75rem;
-      color: #94a3b8;
+      border-left: 3px solid #ffffff;
+      background: #121214;
+      padding: 0.5rem 0.85rem;
+      color: #d4d4d8;
       margin: 0.75rem 0;
+      border-radius: 0 0.375rem 0.375rem 0;
     }
 
     .typing-cursor::after {
       content: '▋';
       display: inline-block;
       vertical-align: middle;
-      color: #0284c7;
+      color: #ffffff;
       animation: blink 0.8s infinite;
       margin-left: 2px;
     }
@@ -118,23 +124,23 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="bg-black text-white min-h-screen flex flex-col font-sans selection:bg-white selection:text-black">
 
   <!-- Top Navigation Bar -->
-  <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 sticky top-0 z-50 px-4 lg:px-8 py-3 flex items-center justify-between">
+  <header class="bg-black/95 backdrop-blur border-b border-zinc-800 sticky top-0 z-50 px-4 lg:px-8 py-3 flex items-center justify-between">
     <div class="flex items-center space-x-3">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
-        <i class="fa-solid fa-book-bookmark text-lg"></i>
+      <div class="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center font-bold text-lg shadow-md">
+        <i class="fa-solid fa-layer-group"></i>
       </div>
       <div>
         <div class="flex items-center space-x-2">
-          <h1 class="text-lg font-bold text-white tracking-wide">SharePoint Policy & AI Assistant</h1>
-          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">
+          <h1 class="text-base sm:text-lg font-bold text-white tracking-wide">SharePoint AI Assistant</h1>
+          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-zinc-900 text-zinc-300 border border-zinc-700">
             {{ deployment }}
           </span>
         </div>
-        <div class="flex items-center space-x-2 text-xs text-slate-400">
-          <a href="{{ site_url }}" target="_blank" class="hover:text-sky-400 transition-colors flex items-center space-x-1">
+        <div class="flex items-center space-x-2 text-xs text-zinc-400">
+          <a href="{{ site_url }}" target="_blank" class="hover:text-white transition-colors flex items-center space-x-1">
             <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
             <span>{{ site_name }} (SharePoint Online)</span>
           </a>
@@ -143,45 +149,53 @@
     </div>
 
     <!-- Center Navigation Tabs -->
-    <div class="hidden md:flex items-center bg-slate-950/60 p-1 rounded-xl border border-slate-800 space-x-1">
-      <button id="tab-chat-btn" onclick="switchTab('chat')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-sky-600 text-white shadow transition-all flex items-center space-x-1.5">
+    <div class="hidden md:flex items-center bg-zinc-950 p-1 rounded-xl border border-zinc-800 space-x-1">
+      <button id="tab-chat-btn" onclick="switchTab('chat')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-white text-black shadow transition-all flex items-center space-x-1.5">
         <i class="fa-solid fa-comments"></i>
         <span>AI Assistant</span>
       </button>
-      <button id="tab-policy-btn" onclick="switchTab('policy')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
-        <i class="fa-solid fa-file-shield text-amber-400"></i>
+      <button id="tab-policy-btn" onclick="switchTab('policy')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-file-lines"></i>
         <span>Policy Knowledge Base</span>
       </button>
-      <button id="tab-lists-btn" onclick="switchTab('lists')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
-        <i class="fa-solid fa-table-list"></i>
+      <button id="tab-lists-btn" onclick="switchTab('lists')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-table"></i>
         <span>Lists Explorer</span>
       </button>
-      <button id="tab-libraries-btn" onclick="switchTab('libraries')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
-        <i class="fa-solid fa-folder-open"></i>
+      <button id="tab-libraries-btn" onclick="switchTab('libraries')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-folder"></i>
         <span>Document Libraries & Upload</span>
       </button>
     </div>
 
     <!-- Right Controls: Status & Re-sync -->
-    <div class="flex items-center space-x-3">
-      <div id="status-indicator" class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/50 text-xs">
-        <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span id="status-text" class="text-slate-300 font-medium">Ready</span>
+    <div class="flex items-center space-x-2">
+      <!-- Status Badge -->
+      <div id="status-indicator" class="flex items-center space-x-2 bg-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-800 text-xs">
+        <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span>
+        <span id="status-text" class="text-zinc-300 font-medium truncate max-w-[150px] sm:max-w-none">Checking...</span>
       </div>
 
-      <button id="sync-btn" onclick="triggerSync()" title="Refresh and sync data from SharePoint" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-all flex items-center space-x-1.5 hover:border-sky-500/50">
+      <!-- Prominent Refresh / Sync Button -->
+      <button id="sync-btn" onclick="triggerSync()" title="Refresh and sync data from SharePoint" class="px-3 py-1.5 bg-white text-black hover:bg-zinc-200 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 shadow">
         <i id="sync-icon" class="fa-solid fa-rotate"></i>
-        <span class="hidden sm:inline">Sync Data</span>
+        <span class="hidden sm:inline">Refresh Data</span>
       </button>
     </div>
   </header>
 
   <!-- Mobile Tab Bar -->
-  <div class="flex md:hidden bg-slate-900 border-b border-slate-800 px-3 py-2 space-x-1 overflow-x-auto text-xs">
-    <button onclick="switchTab('chat')" id="m-tab-chat" class="px-3 py-1.5 font-semibold rounded-lg bg-sky-600 text-white whitespace-nowrap">Chat</button>
-    <button onclick="switchTab('policy')" id="m-tab-policy" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-800 text-slate-300 whitespace-nowrap">Policy KB</button>
-    <button onclick="switchTab('lists')" id="m-tab-lists" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-800 text-slate-300 whitespace-nowrap">Lists</button>
-    <button onclick="switchTab('libraries')" id="m-tab-libraries" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-800 text-slate-300 whitespace-nowrap">Libraries</button>
+  <div class="flex md:hidden bg-zinc-950 border-b border-zinc-800 px-3 py-2 space-x-1 overflow-x-auto text-xs">
+    <button onclick="switchTab('chat')" id="m-tab-chat" class="px-3 py-1.5 font-semibold rounded-lg bg-white text-black whitespace-nowrap">Chat</button>
+    <button onclick="switchTab('policy')" id="m-tab-policy" class="px-3 py-1.5 font-semibold rounded-lg bg-zinc-900 text-zinc-400 whitespace-nowrap">Policy KB</button>
+    <button onclick="switchTab('lists')" id="m-tab-lists" class="px-3 py-1.5 font-semibold rounded-lg bg-zinc-900 text-zinc-400 whitespace-nowrap">Lists</button>
+    <button onclick="switchTab('libraries')" id="m-tab-libraries" class="px-3 py-1.5 font-semibold rounded-lg bg-zinc-900 text-zinc-400 whitespace-nowrap">Libraries & Upload</button>
+  </div>
+
+  <!-- Notification Toast Banner -->
+  <div id="toast-banner" class="hidden fixed bottom-6 right-6 z-50 bg-white text-black px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-zinc-300 transition-all">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-lg"></i>
+    <span id="toast-text">Message</span>
   </div>
 
   <!-- MAIN CONTENT CONTAINER -->
@@ -192,370 +206,310 @@
       
       <!-- Quick Prompts Pill Carousel -->
       <div class="mb-3 flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-        <span class="text-slate-500 shrink-0"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Policy & Data Quick Ask:</span>
-        <button onclick="sendQuickPrompt('What are the leave entitlements and notice period rules in the HR Policy Manual?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          <i class="fa-solid fa-calendar-check text-sky-400 mr-1"></i> HR Leave Entitlements
+        <span class="text-zinc-500 shrink-0 font-medium"><i class="fa-solid fa-bolt mr-1 text-white"></i> Quick Prompts:</span>
+        <button onclick="sendQuickPrompt('What are the leave entitlements and notice period rules in the HR Policy Manual?')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-500 text-zinc-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          Leave Entitlements
         </button>
-        <button onclick="sendQuickPrompt('What are the daily travel allowance and expense reimbursement limits in the Financial Policy Guidelines?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          <i class="fa-solid fa-receipt text-emerald-400 mr-1"></i> Travel & Expense Limits
+        <button onclick="sendQuickPrompt('What are the daily travel allowance and expense reimbursement limits in the Financial Policy Guidelines?')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-500 text-zinc-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          Travel & Expense Limits
         </button>
-        <button onclick="sendQuickPrompt('What are the SLA response and resolution timeframes for P1, P2, P3 issues in Customer Support SLA Handbook?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          <i class="fa-solid fa-clock text-rose-400 mr-1"></i> Customer Support SLAs
+        <button onclick="sendQuickPrompt('What are the SLA response and resolution timeframes for P1, P2, P3 issues in Customer Support SLA Handbook?')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-500 text-zinc-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          Customer Support SLAs
         </button>
-        <button onclick="sendQuickPrompt('What are the code review and Git branching rules in the Software Engineering Standards?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          <i class="fa-solid fa-code text-indigo-400 mr-1"></i> Engineering Standards
+        <button onclick="sendQuickPrompt('What are the code review and Git branching rules in the Software Engineering Standards?')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-500 text-zinc-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          Engineering Standards
         </button>
-        <button onclick="sendQuickPrompt('How do I troubleshoot VPN connection errors according to the IT Troubleshooting Guide?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          <i class="fa-solid fa-network-wired text-cyan-400 mr-1"></i> VPN Troubleshooting
-        </button>
-        <button onclick="sendQuickPrompt('Give me a table of all Team Leads from Employee Details list with their email and location.')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          <i class="fa-solid fa-user-tie text-amber-400 mr-1"></i> Team Leads Directory
+        <button onclick="sendQuickPrompt('Give me a table of all Team Leads from Employee Details list with their email and location.')" class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-500 text-zinc-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          Team Leads Directory
         </button>
       </div>
 
       <!-- Chat Messages Scroll Area -->
-      <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 p-4 bg-slate-900/50 rounded-2xl border border-slate-800/80 mb-4 shadow-inner">
+      <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 p-4 bg-zinc-950/70 rounded-2xl border border-zinc-800/80 mb-4 shadow-inner">
         <!-- Welcome Message -->
         <div class="flex items-start space-x-3 message-bubble">
-          <div class="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white shrink-0 mt-1 shadow-md">
+          <div class="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center shrink-0 mt-1 shadow font-bold">
             <i class="fa-solid fa-robot text-sm"></i>
           </div>
-          <div class="flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 text-slate-200 shadow-sm">
-            <div class="font-bold text-sm text-sky-400 mb-1 flex items-center space-x-2">
-              <span>SharePoint Enterprise Policy & Data Assistant</span>
-              <span class="text-[10px] text-slate-400 font-normal">Active Live Integration</span>
+          <div class="flex-1 bg-zinc-900/90 border border-zinc-800 rounded-2xl p-4 text-zinc-200 shadow-sm">
+            <div class="font-bold text-sm text-white mb-1 flex items-center space-x-2">
+              <span>SharePoint Policy & Data Assistant</span>
+              <span class="text-[10px] text-zinc-400 font-normal px-2 py-0.5 rounded bg-zinc-800 border border-zinc-700">Online</span>
             </div>
             <div class="markdown-body">
-              <p>Hello! I am your <strong>Enterprise Policy & SharePoint Knowledge Base Assistant</strong>. I perform deep <strong>Retrieval-Augmented Generation (RAG)</strong> over your corporate documents and lists:</p>
+              <p>Welcome! I am your <strong>Enterprise SharePoint AI Assistant</strong>. I perform real-time <strong>RAG search</strong> across your corporate policy manuals and tabular lists:</p>
               <ul>
-                <li><strong>Policy Knowledge Base</strong>:
-                  <ul>
-                    <li><code>01_HR_Policy_Manual.pdf</code> (Leave policies, code of conduct, probation, disciplinary rules)</li>
-                    <li><code>04_Financial_Policy_Guidelines.pdf</code> (Budgeting, expense reimbursement, travel allowances)</li>
-                    <li><code>06_Customer_Support_SLA_Handbook.pdf</code> (Severity tiers P1-P4, SLA response & resolution metrics)</li>
-                    <li><code>02_Software_Engineering_Standards.pdf</code> & <code>05_IT_Infrastructure_Architecture.pdf</code></li>
-                    <li><code>VLS-Onboarding-Offboarding-Guide.pdf</code> & <code>VLS-Performance-Appraisal-Policy.docx</code></li>
-                    <li><code>VLS-IT-020_Illustrated_Troubleshooting_Guide_v1.0.pdf</code></li>
-                  </ul>
-                </li>
+                <li><strong>Policy Documents</strong>: HR Policy Manual, Financial Guidelines, Customer Support SLA Handbook, Software Engineering Standards, IT Architecture, Troubleshooting Guides.</li>
                 <li><strong>SharePoint Lists</strong>: <code>Employee Details</code>, <code>PatientIntake</code>, <code>Employee Asset Subtable</code>, <code>News Sources</code>.</li>
               </ul>
-              <p>Ask any policy question, procedure, SLA condition, or employee inquiry, and I will cite the exact document and clause!</p>
+              <p>Ask any policy question, SLA metric, procedure, or employee record, and I will cite the exact document and page number!</p>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Chat Input Area -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 shadow-lg flex flex-col space-y-2">
-        <!-- Active Tool Status Indicator -->
-        <div id="live-tool-status" class="hidden text-xs text-sky-400 flex items-center space-x-2 bg-sky-950/40 border border-sky-800/40 px-3 py-1.5 rounded-xl">
-          <i class="fa-solid fa-circle-notch fa-spin"></i>
-          <span id="live-tool-text">Querying Knowledge Base...</span>
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-3 shadow-xl flex flex-col space-y-2">
+        <!-- Live Tool Status -->
+        <div id="live-tool-status" class="hidden flex items-center space-x-2 text-xs text-zinc-400 bg-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-800">
+          <i class="fa-solid fa-circle-notch fa-spin text-white"></i>
+          <span id="live-tool-text">Searching SharePoint knowledge base...</span>
         </div>
 
-        <div class="flex items-end space-x-2">
-          <textarea id="user-input" rows="2" placeholder="Ask about HR policies, financial guidelines, SLAs, technical standards, or employee records..." 
-            class="flex-1 bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none px-2 py-1 leading-relaxed"
-            onkeydown="handleKey(event)"></textarea>
+        <div class="flex items-center space-x-2">
+          <textarea
+            id="user-input"
+            rows="1"
+            placeholder="Ask anything from company policies, SLAs, or employee lists..."
+            class="flex-1 bg-black text-white text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-white border border-zinc-800 resize-none placeholder-zinc-500"
+            onkeydown="handleKey(event)"
+          ></textarea>
 
-          <div class="flex items-center space-x-2">
-            <button id="clear-chat-btn" onclick="clearChat()" title="Clear Chat" class="p-2.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-xl transition-all">
-              <i class="fa-regular fa-trash-can"></i>
-            </button>
-            <button id="send-btn" onclick="sendMessage()" class="px-4 py-2.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white rounded-xl font-medium text-sm transition-all shadow-md shadow-sky-600/30 flex items-center space-x-1.5">
-              <span>Send</span>
-              <i class="fa-solid fa-paper-plane text-xs"></i>
-            </button>
-          </div>
+          <button
+            id="send-btn"
+            onclick="sendMessage()"
+            class="px-4 py-2.5 bg-white text-black hover:bg-zinc-200 font-semibold text-sm rounded-xl transition-all flex items-center space-x-1.5 shadow shrink-0"
+          >
+            <span>Ask</span>
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- 2. POLICY KNOWLEDGE BASE RAG EXPLORER TAB -->
+    <!-- 2. POLICY KNOWLEDGE BASE TAB -->
     <div id="view-policy" class="hidden flex-1 flex flex-col h-full overflow-hidden">
-      <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div class="flex items-center justify-between mb-4">
         <div>
-          <h2 class="text-base font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-file-shield text-amber-400"></i>
-            <span>Policy Documents Knowledge Base (RAG)</span>
+          <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-file-shield text-white"></i>
+            <span>Policy Documents Knowledge Base</span>
           </h2>
-          <p class="text-xs text-slate-400">Explore corporate policies, guidelines, and manuals indexed directly into the RAG engine.</p>
+          <p class="text-xs text-zinc-400">Indexed corporate policy manuals, guidelines, and SOPs parsed for RAG</p>
         </div>
         <div class="flex items-center space-x-2">
-          <button onclick="switchTab('libraries')" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium rounded-lg transition-all flex items-center space-x-1.5">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-            <span>Upload New Policy Document</span>
+          <button onclick="loadLibrariesMeta()" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs text-white rounded-lg flex items-center space-x-1.5 transition-all">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span>Refresh View</span>
+          </button>
+          <button onclick="switchTab('libraries')" class="px-3 py-1.5 bg-white text-black hover:bg-zinc-200 text-xs font-semibold rounded-lg flex items-center space-x-1.5 transition-all shadow">
+            <i class="fa-solid fa-plus"></i>
+            <span>Upload New Document</span>
           </button>
         </div>
       </div>
 
-      <!-- Policy Topic Cards -->
-      <div class="flex-1 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
-        
-        <!-- HR Policies Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
-          <div>
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-9 h-9 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
-                <i class="fa-solid fa-user-group text-sm"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm text-white">HR & People Policies</h3>
-                <span class="text-[11px] text-slate-400">HR Manual, Onboarding, Appraisals</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Leave categories, probation period, performance appraisal rating system, and employee conduct.</p>
-            <div class="space-y-1.5">
-              <button onclick="sendQuickPrompt('What is the annual leave and maternity/paternity leave entitlement in the HR Policy Manual?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-sky-400 mr-1.5"></i>Leave entitlement rules?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('What is the probation period duration and confirmation process in the HR Policy Manual?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-sky-400 mr-1.5"></i>Probation period & confirmation?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('Explain the 5-point performance rating system from the Performance Appraisal Policy.')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-sky-400 mr-1.5"></i>Performance appraisal ratings?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-            <span>Documents: 3 files</span>
-            <span class="text-sky-400 font-medium">HR Knowledge Base</span>
-          </div>
+      <!-- Quick Search Bar in Policy Tab -->
+      <div class="mb-4">
+        <div class="relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-zinc-500 text-xs"></i>
+          <input
+            id="policy-search-box"
+            type="text"
+            placeholder="Search policies (e.g., paternity leave, travel allowance, SLA response time, VPN)..."
+            class="w-full bg-zinc-950 border border-zinc-800 rounded-xl pl-9 pr-24 py-2 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-white"
+            onkeydown="if(event.key === 'Enter') executePolicySearch()"
+          />
+          <button onclick="executePolicySearch()" class="absolute right-2 top-1.5 px-3 py-1 bg-white text-black font-semibold text-xs rounded-lg hover:bg-zinc-200 transition-all">
+            Search
+          </button>
         </div>
+      </div>
 
-        <!-- Financial Policies Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
-          <div>
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                <i class="fa-solid fa-coins text-sm"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm text-white">Financial & Budgeting</h3>
-                <span class="text-[11px] text-slate-400">Expenses, Procurement, Travel</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Reimbursement eligibility, per-diem allowances, petty cash thresholds, and approval chains.</p>
-            <div class="space-y-1.5">
-              <button onclick="sendQuickPrompt('What are the rules and maximum limits for travel expense reimbursements in Financial Policy Guidelines?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-emerald-400 mr-1.5"></i>Travel reimbursement limits?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('What are the approval thresholds for procurement and capital expenditures in Financial Guidelines?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-emerald-400 mr-1.5"></i>Procurement approval tiers?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('What is the deadline and documentation required for submitting monthly expense claims?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-emerald-400 mr-1.5"></i>Expense claim deadlines?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-            <span>Documents: 1 file</span>
-            <span class="text-emerald-400 font-medium">HR Knowledge Base</span>
-          </div>
-        </div>
-
-        <!-- Customer Support SLA Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
-          <div>
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-9 h-9 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center">
-                <i class="fa-solid fa-headset text-sm"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm text-white">Customer Support & SLAs</h3>
-                <span class="text-[11px] text-slate-400">Response Times, P1-P4 Severity</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Incident classification, target response/resolution windows, escalation matrix, and customer comms.</p>
-            <div class="space-y-1.5">
-              <button onclick="sendQuickPrompt('Provide a table of Severity 1 (Critical) to Severity 4 (Low) definitions and SLA times from the SLA Handbook.')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-rose-400 mr-1.5"></i>P1 to P4 Severity matrix?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('What is the escalation hierarchy for unresolved P1 incidents in Customer Support SLA Handbook?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-rose-400 mr-1.5"></i>P1 incident escalation matrix?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('What are the penalties or SLA credit provisions if resolution targets are breached?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-rose-400 mr-1.5"></i>SLA breach penalty rules?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-            <span>Documents: 1 file</span>
-            <span class="text-rose-400 font-medium">IT Knowledge Base</span>
-          </div>
-        </div>
-
-        <!-- Software Engineering Standards Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
-          <div>
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
-                <i class="fa-solid fa-code text-sm"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm text-white">Software Engineering Standards</h3>
-                <span class="text-[11px] text-slate-400">Code Reviews, Git, Python/TypeScript</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Git commit message conventions, code review approvals, unit test coverage minimums, and CI/CD.</p>
-            <div class="space-y-1.5">
-              <button onclick="sendQuickPrompt('What is the required test coverage percentage and code review process in Software Engineering Standards?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-indigo-400 mr-1.5"></i>Test coverage & code review rules?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('What are the naming conventions and formatting guidelines for Python and TypeScript code?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-indigo-400 mr-1.5"></i>Python & TypeScript conventions?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-            <span>Documents: 1 file</span>
-            <span class="text-indigo-400 font-medium">IT Knowledge Base</span>
-          </div>
-        </div>
-
-        <!-- IT Infrastructure & Troubleshooting Card -->
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
-          <div>
-            <div class="flex items-center space-x-3 mb-3">
-              <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center">
-                <i class="fa-solid fa-screwdriver-wrench text-sm"></i>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm text-white">IT Troubleshooting & Guides</h3>
-                <span class="text-[11px] text-slate-400">Hardware, Network, VPN Guides</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-400 mb-3">Step-by-step diagnostic procedures for VPN drops, printer issues, Outlook errors, and cloud infra.</p>
-            <div class="space-y-1.5">
-              <button onclick="sendQuickPrompt('What are the exact diagnostic steps for VPN error 800 and connection drops in the IT Troubleshooting Guide?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-cyan-400 mr-1.5"></i>VPN error 800 solution?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-              <button onclick="sendQuickPrompt('What is the password policy and MFA requirement in IT Support manual?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
-                <span><i class="fa-solid fa-circle-question text-cyan-400 mr-1.5"></i>Password policy & MFA?</span>
-                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
-              </button>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
-            <span>Documents: 3 files</span>
-            <span class="text-cyan-400 font-medium">IT Knowledge Base</span>
-          </div>
-        </div>
-
+      <!-- Policy Chunks / Documents Display -->
+      <div id="policy-content-area" class="flex-1 overflow-y-auto space-y-3 p-1">
+        <!-- Rendered dynamically -->
       </div>
     </div>
 
-    <!-- 3. SHAREPOINT LISTS EXPLORER TAB -->
+    <!-- 3. LISTS EXPLORER TAB -->
     <div id="view-lists" class="hidden flex-1 flex flex-col h-full overflow-hidden">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <div>
-          <h2 class="text-base font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-table-list text-sky-400"></i>
-            <span>SharePoint Data Lists</span>
+          <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-table"></i>
+            <span>SharePoint Lists Explorer</span>
           </h2>
-          <p class="text-xs text-slate-400">Select any list from the site to browse columns and records directly.</p>
+          <p class="text-xs text-zinc-400">Explore tabular rows from all 11 SharePoint lists</p>
         </div>
 
         <div class="flex items-center space-x-2">
-          <select id="list-selector" onchange="loadSelectedList()" class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500">
-            <option value="">Loading lists...</option>
+          <select id="list-selector" onchange="loadSelectedList()" class="bg-zinc-950 border border-zinc-800 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white">
+            <option value="">-- Choose a SharePoint List --</option>
           </select>
-          <input type="text" id="list-search-box" onkeyup="filterListTable()" placeholder="Search records..." class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500 w-44">
-        </div>
-      </div>
-
-      <!-- List Data Table Container -->
-      <div class="flex-1 overflow-auto bg-slate-900 rounded-xl border border-slate-800 p-2">
-        <div id="list-table-container" class="overflow-x-auto min-w-full">
-          <p class="text-xs text-slate-500 p-4">Select a list above to view data.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. SHAREPOINT DOCUMENT LIBRARIES & UPLOAD TAB -->
-    <div id="view-libraries" class="hidden flex-1 flex flex-col h-full overflow-hidden">
-      
-      <!-- Upload Card Banner -->
-      <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h2 class="text-base font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-cloud-arrow-up text-sky-400"></i>
-            <span>Upload Document to SharePoint Knowledge Base</span>
-          </h2>
-          <p class="text-xs text-slate-400">Upload PDF, DOCX, or Excel documents. They will be saved to SharePoint and indexed into RAG immediately.</p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row items-center gap-2">
-          <select id="upload-drive-select" class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500">
-            <!-- Populated dynamically -->
-          </select>
-          <input type="file" id="upload-file-input" accept=".pdf,.docx,.doc,.xlsx,.xls,.txt,.csv" class="hidden" onchange="handleFileUpload(event)">
-          <button onclick="document.getElementById('upload-file-input').click()" id="upload-trigger-btn" class="px-4 py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white text-xs font-semibold rounded-lg shadow transition-all flex items-center space-x-1.5 whitespace-nowrap">
-            <i class="fa-solid fa-file-arrow-up"></i>
-            <span>Choose & Upload File</span>
+          <button onclick="loadSelectedList()" class="px-3 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs text-white rounded-xl flex items-center space-x-1.5 transition-all">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            <span>Refresh</span>
           </button>
         </div>
       </div>
 
-      <div id="upload-progress-alert" class="hidden mb-4 p-3 bg-sky-950/60 border border-sky-800 text-sky-300 text-xs rounded-xl flex items-center space-x-2">
-        <i class="fa-solid fa-circle-notch fa-spin"></i>
-        <span id="upload-progress-text">Uploading to SharePoint and indexing chunks...</span>
+      <!-- Search in List -->
+      <div class="mb-3">
+        <input
+          id="list-search-box"
+          type="text"
+          placeholder="Filter records in selected list..."
+          class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-white"
+          oninput="filterListTable()"
+        />
       </div>
 
-      <!-- Libraries Cards Grid -->
-      <div id="libraries-grid" class="flex-1 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
-        <div class="text-xs text-slate-500 p-4">Loading document libraries...</div>
+      <!-- Table Container -->
+      <div id="list-table-container" class="flex-1 overflow-auto bg-zinc-950 border border-zinc-800 rounded-2xl shadow-inner">
+        <p class="text-xs text-zinc-500 p-4">Select a list above to view records.</p>
       </div>
+    </div>
+
+    <!-- 4. DOCUMENT LIBRARIES & UPLOAD TAB -->
+    <div id="view-libraries" class="hidden flex-1 flex flex-col h-full overflow-y-auto space-y-6">
+      
+      <!-- Top Actions Bar -->
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-folder"></i>
+            <span>Document Libraries & Management</span>
+          </h2>
+          <p class="text-xs text-zinc-400">Upload new documents to SharePoint and delete existing files directly</p>
+        </div>
+        <button onclick="loadLibrariesMeta()" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs text-white rounded-lg flex items-center space-x-1.5 transition-all">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          <span>Refresh Files</span>
+        </button>
+      </div>
+
+      <!-- Upload Document Card -->
+      <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 shadow-xl">
+        <h3 class="text-sm font-bold text-white mb-2 flex items-center space-x-2">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span>Upload Document to SharePoint</span>
+        </h3>
+        <p class="text-xs text-zinc-400 mb-4">Supported formats: PDF, DOCX, XLSX, TXT. Files are uploaded directly to your SharePoint Drive and instantly chunked into the RAG index.</p>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3">
+          <select id="upload-drive-select" class="bg-black border border-zinc-800 text-white text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-white w-full sm:w-auto">
+            <!-- Populated via JS -->
+          </select>
+
+          <label class="cursor-pointer bg-white text-black hover:bg-zinc-200 px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all shadow w-full sm:w-auto justify-center">
+            <i class="fa-solid fa-file-arrow-up"></i>
+            <span>Choose File & Upload</span>
+            <input type="file" class="hidden" accept=".pdf,.docx,.xlsx,.txt" onchange="handleFileUpload(event)" />
+          </label>
+        </div>
+
+        <div id="upload-progress-alert" class="hidden mt-4 p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-white flex items-center space-x-2">
+          <i class="fa-solid fa-circle-notch fa-spin text-white"></i>
+          <span id="upload-progress-text">Uploading to SharePoint...</span>
+        </div>
+      </div>
+
+      <!-- Existing Libraries & Files Grid -->
+      <div>
+        <h3 class="text-sm font-bold text-white mb-3 flex items-center space-x-2">
+          <i class="fa-solid fa-files"></i>
+          <span>Existing Libraries & Documents</span>
+        </h3>
+        <div id="libraries-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
     </div>
 
   </main>
 
-  <!-- Client JavaScript -->
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="w-12 h-12 rounded-full bg-red-950/50 border border-red-800 text-red-400 flex items-center justify-center text-xl mb-4">
+        <i class="fa-solid fa-trash-can"></i>
+      </div>
+      <h3 class="text-base font-bold text-white mb-1">Delete Document?</h3>
+      <p id="delete-modal-msg" class="text-xs text-zinc-400 mb-6">
+        Are you sure you want to delete this file from SharePoint and purge its chunks from the AI search index?
+      </p>
+      <div class="flex items-center justify-end space-x-3">
+        <button onclick="closeDeleteModal()" class="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-xs font-semibold text-white rounded-xl transition-all">
+          Cancel
+        </button>
+        <button id="confirm-delete-btn" onclick="executeFileDelete()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-xs font-semibold text-white rounded-xl transition-all shadow">
+          Yes, Delete File
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // State
+    let currentTab = "chat";
     let chatHistory = [];
     let isGenerating = false;
     let availableLists = [];
     let availableLibraries = [];
     let currentSelectedListId = null;
+    let pendingDelete = { driveId: null, itemId: null, fileName: "" };
 
-    window.addEventListener("DOMContentLoaded", () => {
-      fetchStatus();
-      loadListsMeta();
-      loadLibrariesMeta();
-    });
+    // Toast Notification Helper
+    function showToast(message, isError = false) {
+      const banner = document.getElementById("toast-banner");
+      const icon = document.getElementById("toast-icon");
+      const text = document.getElementById("toast-text");
 
-    // Tab Switching
+      text.textContent = message;
+      if (isError) {
+        banner.className = "fixed bottom-6 right-6 z-50 bg-red-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-red-500 transition-all";
+        icon.className = "fa-solid fa-circle-exclamation text-lg";
+      } else {
+        banner.className = "fixed bottom-6 right-6 z-50 bg-white text-black px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-zinc-300 transition-all";
+        icon.className = "fa-solid fa-circle-check text-lg";
+      }
+
+      banner.classList.remove("hidden");
+      setTimeout(() => banner.classList.add("hidden"), 4000);
+    }
+
+    // Switch Tab
     function switchTab(tab) {
-      document.getElementById("view-chat").classList.toggle("hidden", tab !== 'chat');
-      document.getElementById("view-policy").classList.toggle("hidden", tab !== 'policy');
-      document.getElementById("view-lists").classList.toggle("hidden", tab !== 'lists');
-      document.getElementById("view-libraries").classList.toggle("hidden", tab !== 'libraries');
+      currentTab = tab;
+      const views = ["chat", "policy", "lists", "libraries"];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (v === tab) {
+          el.classList.remove("hidden");
+        } else {
+          el.classList.add("hidden");
+        }
+      });
 
+      // Update Navigation Buttons Style
       const btnChat = document.getElementById("tab-chat-btn");
       const btnPolicy = document.getElementById("tab-policy-btn");
       const btnLists = document.getElementById("tab-lists-btn");
       const btnLibraries = document.getElementById("tab-libraries-btn");
 
-      const activeClass = "bg-sky-600 text-white shadow";
-      const inactiveClass = "text-slate-400 hover:text-white";
+      const activeClass = "bg-white text-black shadow";
+      const inactiveClass = "text-zinc-400 hover:text-white";
 
       btnChat.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'chat' ? activeClass : inactiveClass}`;
       btnPolicy.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'policy' ? activeClass : inactiveClass}`;
       btnLists.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'lists' ? activeClass : inactiveClass}`;
       btnLibraries.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'libraries' ? activeClass : inactiveClass}`;
+
+      // Mobile
+      ["chat", "policy", "lists", "libraries"].forEach(m => {
+        const mBtn = document.getElementById(`m-tab-${m}`);
+        if (m === tab) {
+          mBtn.className = "px-3 py-1.5 font-semibold rounded-lg bg-white text-black whitespace-nowrap";
+        } else {
+          mBtn.className = "px-3 py-1.5 font-semibold rounded-lg bg-zinc-900 text-zinc-400 whitespace-nowrap";
+        }
+      });
+
+      if (tab === "lists" && availableLists.length === 0) loadListsMeta();
+      if (tab === "libraries" && availableLibraries.length === 0) loadLibrariesMeta();
+      if (tab === "policy") loadPolicyOverview();
     }
 
     // Status Fetch
@@ -568,12 +522,12 @@
 
         if (data.status === "online") {
           dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400";
-          text.textContent = `Online (${data.stats.total_list_items} items, ${data.stats.total_documents} docs, ${data.stats.indexed_chunks} RAG chunks)`;
+          text.textContent = `Online (${data.stats.total_list_items} items, ${data.stats.total_documents} docs, ${data.stats.indexed_chunks} chunks)`;
         } else if (data.status === "syncing") {
           dot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
           text.textContent = data.sync_message || "Syncing with SharePoint...";
         } else {
-          dot.className = "w-2.5 h-2.5 rounded-full bg-rose-400";
+          dot.className = "w-2.5 h-2.5 rounded-full bg-red-400";
           text.textContent = data.sync_message || "Offline";
         }
       } catch (e) {
@@ -593,6 +547,7 @@
       try {
         const res = await fetch("/api/sync", { method: "POST" });
         const data = await res.json();
+        showToast("SharePoint synchronization started...");
         
         let attempts = 0;
         const pollInterval = setInterval(async () => {
@@ -600,13 +555,15 @@
           try {
             const statusRes = await fetch("/api/status");
             const sData = await statusRes.json();
-            if (sData.status === "online" || attempts > 40) {
+            if (sData.status === "online" || attempts > 30) {
               clearInterval(pollInterval);
               syncIcon.classList.remove("fa-spin");
               statusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400";
-              statusText.textContent = `Online (${sData.stats.total_list_items} items, ${sData.stats.total_documents} docs, ${sData.stats.indexed_chunks} RAG chunks)`;
+              statusText.textContent = `Online (${sData.stats.total_list_items} items, ${sData.stats.total_documents} docs, ${sData.stats.indexed_chunks} chunks)`;
               loadListsMeta();
               loadLibrariesMeta();
+              loadPolicyOverview();
+              showToast("Data synchronization complete!");
             } else {
               statusText.textContent = sData.sync_message || "Syncing...";
             }
@@ -617,13 +574,14 @@
 
       } catch (e) {
         syncIcon.classList.remove("fa-spin");
-        statusDot.className = "w-2.5 h-2.5 rounded-full bg-rose-400";
-        statusText.textContent = "Sync request failed: " + e.message;
+        statusDot.className = "w-2.5 h-2.5 rounded-full bg-red-400";
+        statusText.textContent = "Sync failed: " + e.message;
+        showToast("Sync failed: " + e.message, true);
       }
     }
 
-    // Poll status every 15 seconds
-    setInterval(fetchStatus, 15000);
+    // Poll status every 20 seconds
+    setInterval(fetchStatus, 20000);
 
     // Quick Prompt Helper
     function sendQuickPrompt(promptText) {
@@ -663,16 +621,63 @@
         const data = await res.json();
         if (data.success) {
           progressText.textContent = `Successfully uploaded "${file.name}" and indexed ${data.chunks_added} chunks!`;
-          setTimeout(() => progressAlert.classList.add("hidden"), 4000);
+          showToast(`Uploaded "${file.name}" (+${data.chunks_added} chunks)`);
+          setTimeout(() => progressAlert.classList.add("hidden"), 3000);
           loadLibrariesMeta();
           fetchStatus();
         } else {
           progressText.textContent = `Upload failed: ${data.error || "Unknown error"}`;
+          showToast(`Upload failed: ${data.error || "Unknown error"}`, true);
         }
       } catch (err) {
         progressText.textContent = `Upload error: ${err.message}`;
+        showToast(`Upload error: ${err.message}`, true);
       } finally {
         event.target.value = "";
+      }
+    }
+
+    // Delete Modal Operations
+    function confirmDeleteFile(driveId, itemId, fileName) {
+      pendingDelete = { driveId, itemId, fileName };
+      document.getElementById("delete-modal-msg").textContent = `Are you sure you want to delete "${fileName}" from SharePoint and remove all its indexed chunks from the AI assistant?`;
+      document.getElementById("delete-modal").classList.remove("hidden");
+    }
+
+    function closeDeleteModal() {
+      document.getElementById("delete-modal").classList.add("hidden");
+      pendingDelete = { driveId: null, itemId: null, fileName: "" };
+    }
+
+    async function executeFileDelete() {
+      const { driveId, itemId, fileName } = pendingDelete;
+      if (!driveId || !itemId) return;
+
+      const btn = document.getElementById("confirm-delete-btn");
+      btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Deleting...`;
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/libraries/${driveId}/files/${itemId}?file_name=${encodeURIComponent(fileName)}`, {
+          method: "DELETE"
+        });
+        const data = await res.json();
+        closeDeleteModal();
+
+        if (data.success) {
+          showToast(`Deleted "${fileName}" (Purged ${data.chunks_removed} chunks)`);
+          loadLibrariesMeta();
+          loadPolicyOverview();
+          fetchStatus();
+        } else {
+          showToast(`Delete failed: ${data.error || "Unknown error"}`, true);
+        }
+      } catch (err) {
+        closeDeleteModal();
+        showToast(`Delete error: ${err.message}`, true);
+      } finally {
+        btn.innerHTML = `Yes, Delete File`;
+        btn.disabled = false;
       }
     }
 
@@ -707,7 +712,7 @@
 
         if (!response.ok) {
           const errText = await response.text();
-          botMsgObj.bodyEl.innerHTML = `<span class="text-rose-400">Error: ${errText}</span>`;
+          botMsgObj.bodyEl.innerHTML = `<span class="text-red-400">Error: ${errText}</span>`;
           isGenerating = false;
           statusBox.classList.add("hidden");
           return;
@@ -748,48 +753,56 @@
                 fullAssistantText += `\n\n> ⚠️ **Error**: ${data.error}`;
                 botMsgObj.bodyEl.innerHTML = marked.parse(fullAssistantText);
               }
+              if (data.done) {
+                botMsgObj.bodyEl.classList.remove("typing-cursor");
+                statusBox.classList.add("hidden");
+
+                if (collectedCitations.length > 0) {
+                  renderCitationPills(botMsgObj.bubbleEl, collectedCitations);
+                }
+                chatHistory.push({ role: "assistant", content: fullAssistantText });
+                isGenerating = false;
+              }
             } catch (err) {
-              console.error("Parse line error:", err);
+              console.error("Stream parse error:", err);
             }
           }
         }
-
-        botMsgObj.bodyEl.classList.remove("typing-cursor");
-        botMsgObj.bodyEl.innerHTML = marked.parse(fullAssistantText || "No response received.");
-        
-        // Syntax highlighting
-        botMsgObj.bodyEl.querySelectorAll("pre code").forEach(el => hljs.highlightElement(el));
-
-        // Render Citations with document links
-        if (collectedCitations.length > 0) {
-          const citationsContainer = document.createElement("div");
-          citationsContainer.className = "mt-3 pt-2.5 border-t border-slate-800 text-xs flex flex-wrap items-center gap-1.5";
-          citationsContainer.innerHTML = `<span class="text-slate-400 font-semibold mr-1"><i class="fa-solid fa-bookmark text-sky-400 mr-1"></i>Sources & Clauses:</span>`;
-          
-          const uniqueCitations = Array.from(new Set(collectedCitations.map(c => JSON.stringify(c))));
-          uniqueCitations.forEach(cStr => {
-            const c = JSON.parse(cStr);
-            const pill = document.createElement(c.url ? "a" : "span");
-            if (c.url) {
-              pill.href = c.url;
-              pill.target = "_blank";
-            }
-            pill.className = "bg-slate-800/90 text-sky-300 border border-slate-700 px-2 py-0.5 rounded-md text-[11px] font-mono flex items-center space-x-1 hover:border-sky-500/50 transition-colors";
-            pill.innerHTML = `<i class="fa-regular fa-file-lines text-[10px]"></i><span>${c.source}</span>`;
-            citationsContainer.appendChild(pill);
-          });
-          botMsgObj.bubbleEl.appendChild(citationsContainer);
-        }
-
-        chatHistory.push({ role: "assistant", content: fullAssistantText });
-
       } catch (err) {
-        botMsgObj.bodyEl.innerHTML = `<span class="text-rose-400">Failed to connect: ${err.message}</span>`;
+        botMsgObj.bodyEl.innerHTML = `<span class="text-red-400">Network error: ${err.message}</span>`;
       } finally {
         isGenerating = false;
         statusBox.classList.add("hidden");
-        scrollToBottom();
+        botMsgObj.bodyEl.classList.remove("typing-cursor");
       }
+    }
+
+    function renderCitationPills(container, citations) {
+      const div = document.createElement("div");
+      div.className = "mt-3 pt-3 border-t border-zinc-800 flex flex-wrap gap-1.5 items-center";
+
+      const title = document.createElement("span");
+      title.className = "text-[11px] text-zinc-400 font-semibold mr-1";
+      title.innerHTML = `<i class="fa-solid fa-bookmark text-white mr-1"></i> Grounded Citations:`;
+      div.appendChild(title);
+
+      const seen = new Set();
+      citations.forEach(c => {
+        if (seen.has(c.source)) return;
+        seen.add(c.source);
+
+        const pill = document.createElement("a");
+        pill.className = "px-2 py-0.5 rounded-full text-[10px] font-medium bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 flex items-center space-x-1 transition-all";
+        pill.innerHTML = `<i class="fa-solid fa-file-pdf text-white"></i><span>${c.source}</span>`;
+        if (c.url) {
+          pill.href = c.url;
+          pill.target = "_blank";
+        }
+        div.appendChild(pill);
+      });
+
+      container.appendChild(div);
+      scrollToBottom();
     }
 
     function appendUserMessage(text) {
@@ -797,10 +810,10 @@
       const div = document.createElement("div");
       div.className = "flex items-start justify-end space-x-3";
       div.innerHTML = `
-        <div class="bg-gradient-to-r from-sky-600 to-indigo-600 text-white rounded-2xl rounded-tr-none px-4 py-2.5 max-w-[80%] shadow text-sm">
+        <div class="bg-zinc-800 text-white border border-zinc-700 rounded-2xl rounded-tr-none px-4 py-2.5 max-w-[80%] shadow text-sm">
           ${text.replace(/\n/g, '<br/>')}
         </div>
-        <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0 mt-1">
+        <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white shrink-0 mt-1">
           <i class="fa-solid fa-user text-xs"></i>
         </div>
       `;
@@ -814,21 +827,21 @@
       div.className = "flex items-start space-x-3";
       
       const bubble = document.createElement("div");
-      bubble.className = "flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 text-slate-200 shadow-sm max-w-[95%]";
+      bubble.className = "flex-1 bg-zinc-900 border border-zinc-800 rounded-2xl p-4 text-zinc-200 shadow-sm max-w-[95%]";
 
       const header = document.createElement("div");
-      header.className = "font-bold text-sm text-sky-400 mb-1 flex items-center space-x-2";
+      header.className = "font-bold text-sm text-white mb-1 flex items-center space-x-2";
       header.innerHTML = `<span>SharePoint Policy AI</span>`;
 
       const body = document.createElement("div");
       body.className = "markdown-body typing-cursor";
-      body.innerHTML = "<p class='text-slate-400 italic text-xs'>Searching corporate policies and knowledge bases...</p>";
+      body.innerHTML = "<p class='text-zinc-400 italic text-xs'>Searching corporate policies and knowledge bases...</p>";
 
       bubble.appendChild(header);
       bubble.appendChild(body);
 
       div.innerHTML = `
-        <div class="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white shrink-0 mt-1 shadow-md">
+        <div class="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center shrink-0 mt-1 shadow font-bold">
           <i class="fa-solid fa-robot text-sm"></i>
         </div>
       `;
@@ -842,12 +855,6 @@
     function scrollToBottom() {
       const container = document.getElementById("chat-messages");
       container.scrollTop = container.scrollHeight;
-    }
-
-    function clearChat() {
-      chatHistory = [];
-      const chatContainer = document.getElementById("chat-messages");
-      chatContainer.innerHTML = "";
     }
 
     // --- LISTS EXPLORER LOGIC ---
@@ -882,21 +889,21 @@
       currentSelectedListId = listId;
 
       const container = document.getElementById("list-table-container");
-      container.innerHTML = `<p class="text-xs text-sky-400 p-4"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>Loading items...</p>`;
+      container.innerHTML = `<p class="text-xs text-zinc-400 p-4"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>Loading items...</p>`;
 
       try {
         const res = await fetch(`/api/lists/${listId}/items?limit=50`);
         const data = await res.json();
         renderListTable(data.items);
       } catch (e) {
-        container.innerHTML = `<p class="text-xs text-rose-400 p-4">Failed to load items: ${e.message}</p>`;
+        container.innerHTML = `<p class="text-xs text-red-400 p-4">Failed to load items: ${e.message}</p>`;
       }
     }
 
     function renderListTable(items) {
       const container = document.getElementById("list-table-container");
       if (!items || items.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-500 p-4">No records found in this list.</p>`;
+        container.innerHTML = `<p class="text-xs text-zinc-500 p-4">No records found in this list.</p>`;
         return;
       }
 
@@ -911,18 +918,18 @@
       const columns = Object.keys(sampleFields);
 
       let html = `<table class="min-w-full text-xs text-left border-collapse">`;
-      html += `<thead><tr class="bg-slate-950 border-b border-slate-800 text-sky-400">`;
+      html += `<thead><tr class="bg-black border-b border-zinc-800 text-white font-semibold">`;
       columns.forEach(col => {
-        html += `<th class="p-2.5 font-semibold whitespace-nowrap">${col}</th>`;
+        html += `<th class="p-2.5 whitespace-nowrap">${col}</th>`;
       });
       html += `</tr></thead><tbody>`;
 
       items.forEach((it, idx) => {
-        const bg = idx % 2 === 0 ? "bg-slate-900/60" : "bg-slate-900/20";
-        html += `<tr class="${bg} border-b border-slate-800/60 hover:bg-slate-800/50 transition-colors">`;
+        const bg = idx % 2 === 0 ? "bg-zinc-950" : "bg-zinc-900/40";
+        html += `<tr class="${bg} border-b border-zinc-800/60 hover:bg-zinc-800/40 transition-colors">`;
         columns.forEach(col => {
           const val = it.fields[col] !== undefined ? String(it.fields[col]) : "";
-          html += `<td class="p-2.5 text-slate-300 max-w-xs truncate" title="${val}">${val}</td>`;
+          html += `<td class="p-2.5 text-zinc-300 max-w-xs truncate" title="${val}">${val}</td>`;
         });
         html += `</tr>`;
       });
@@ -939,7 +946,68 @@
       renderListTable(data.items);
     }
 
-    // --- DOCUMENT LIBRARIES LOGIC ---
+    // --- POLICY OVERVIEW & SEARCH ---
+    function loadPolicyOverview() {
+      const area = document.getElementById("policy-content-area");
+      let html = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+
+      if (!availableLibraries || availableLibraries.length === 0) {
+        loadLibrariesMeta().then(() => loadPolicyOverview());
+        return;
+      }
+
+      availableLibraries.forEach(lib => {
+        html += `
+          <div class="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between pb-2 mb-3 border-b border-zinc-800">
+              <span class="font-bold text-sm text-white flex items-center space-x-2">
+                <i class="fa-regular fa-folder text-white"></i>
+                <span>${lib.name}</span>
+              </span>
+              <span class="text-[11px] px-2 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-700">
+                ${lib.file_count} files
+              </span>
+            </div>
+            <ul class="space-y-2">
+        `;
+
+        if (lib.files && lib.files.length > 0) {
+          lib.files.forEach(f => {
+            html += `
+              <li class="flex items-center justify-between p-2 rounded-xl bg-zinc-900/60 border border-zinc-800/60 text-xs">
+                <div class="truncate mr-2">
+                  <div class="font-medium text-white truncate" title="${f.name}">${f.name}</div>
+                  <div class="text-[10px] text-zinc-500">${Math.round(f.size / 1024)} KB</div>
+                </div>
+                <div class="flex items-center space-x-1 shrink-0">
+                  <button onclick="sendQuickPrompt('Summarize key rules and clauses from ${f.name}')" class="px-2 py-1 bg-white text-black hover:bg-zinc-200 rounded-lg font-medium text-[10px] transition-all">
+                    Ask AI
+                  </button>
+                  <button onclick="confirmDeleteFile('${lib.id}', '${f.id}', '${f.name}')" title="Delete document" class="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
+                    <i class="fa-solid fa-trash-can text-xs"></i>
+                  </button>
+                </div>
+              </li>
+            `;
+          });
+        } else {
+          html += `<li class="text-xs text-zinc-500 italic py-2">No documents found.</li>`;
+        }
+
+        html += `</ul></div>`;
+      });
+
+      html += `</div>`;
+      area.innerHTML = html;
+    }
+
+    function executePolicySearch() {
+      const q = document.getElementById("policy-search-box").value.trim();
+      if (!q) return;
+      sendQuickPrompt(`Find and cite all relevant rules regarding: ${q}`);
+    }
+
+    // --- DOCUMENT LIBRARIES & DELETE MANAGEMENT LOGIC ---
     async function loadLibrariesMeta() {
       try {
         const res = await fetch("/api/libraries");
@@ -947,12 +1015,12 @@
         availableLibraries = data.libraries || [];
         const grid = document.getElementById("libraries-grid");
         const driveSelect = document.getElementById("upload-drive-select");
-        
+
         grid.innerHTML = "";
         driveSelect.innerHTML = "";
 
         if (!availableLibraries || availableLibraries.length === 0) {
-          grid.innerHTML = `<p class="text-xs text-slate-500 p-4">No document libraries found.</p>`;
+          grid.innerHTML = `<p class="text-xs text-zinc-500 p-4">No document libraries found.</p>`;
           return;
         }
 
@@ -965,40 +1033,44 @@
 
           // Card
           const card = document.createElement("div");
-          card.className = "bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all";
+          card.className = "bg-zinc-950 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between shadow-sm hover:border-zinc-700 transition-all";
 
           let filesHtml = "";
           if (lib.files && lib.files.length > 0) {
             lib.files.forEach(f => {
-              const icon = f.name.endsWith(".pdf") ? "fa-file-pdf text-rose-400" : (f.name.endsWith(".docx") ? "fa-file-word text-blue-400" : (f.name.endsWith(".xlsx") ? "fa-file-excel text-emerald-400" : "fa-file-lines text-slate-400"));
+              const icon = f.name.endsWith(".pdf") ? "fa-file-pdf" : (f.name.endsWith(".docx") ? "fa-file-word" : (f.name.endsWith(".xlsx") ? "fa-file-excel" : "fa-file-lines"));
               const sizeKb = Math.round(f.size / 1024);
               filesHtml += `
-                <li class="flex items-center justify-between py-2 border-b border-slate-800/60 last:border-0 text-xs">
+                <li class="flex items-center justify-between py-2 border-b border-zinc-800/80 last:border-0 text-xs">
                   <div class="flex items-center space-x-2 truncate">
-                    <i class="fa-solid ${icon}"></i>
-                    <span class="truncate text-slate-300 font-medium" title="${f.name}">${f.name}</span>
+                    <i class="fa-solid ${icon} text-white"></i>
+                    <span class="truncate text-zinc-200 font-medium" title="${f.name}">${f.name}</span>
                   </div>
-                  <div class="flex items-center space-x-2 shrink-0 ml-2">
-                    <span class="text-[10px] text-slate-500">${sizeKb} KB</span>
-                    <button onclick="sendQuickPrompt('Summarize the key sections, rules and policies from ${f.name}')" title="Ask AI about this policy" class="text-sky-400 hover:text-sky-300 px-1.5 py-0.5 rounded bg-slate-800">
+                  <div class="flex items-center space-x-1.5 shrink-0 ml-2">
+                    <span class="text-[10px] text-zinc-500">${sizeKb} KB</span>
+                    <button onclick="sendQuickPrompt('Summarize key policies from ${f.name}')" title="Ask AI about this document" class="p-1.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg transition-all border border-zinc-700">
                       <i class="fa-solid fa-sparkles text-[10px]"></i>
+                    </button>
+                    <!-- File Delete Button -->
+                    <button onclick="confirmDeleteFile('${lib.id}', '${f.id}', '${f.name}')" title="Delete file from SharePoint" class="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all border border-transparent hover:border-red-900/50">
+                      <i class="fa-solid fa-trash-can text-[10px]"></i>
                     </button>
                   </div>
                 </li>
               `;
             });
           } else {
-            filesHtml = `<li class="text-xs text-slate-500 italic py-2">No files in library.</li>`;
+            filesHtml = `<li class="text-xs text-zinc-500 italic py-2">No files in library.</li>`;
           }
 
           card.innerHTML = `
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-sm text-white flex items-center space-x-2">
-                  <i class="fa-regular fa-folder-closed text-sky-400"></i>
+                  <i class="fa-regular fa-folder text-white"></i>
                   <span>${lib.name}</span>
                 </h3>
-                <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                <span class="text-[11px] px-2 py-0.5 rounded-full bg-zinc-900 text-zinc-400 border border-zinc-800">
                   ${lib.file_count} files
                 </span>
               </div>
@@ -1006,12 +1078,12 @@
                 ${filesHtml}
               </ul>
             </div>
-            <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between">
-              <button onclick="sendQuickPrompt('Summarize the policies and documents in ${lib.name}')" class="text-xs text-sky-400 hover:text-sky-300 font-medium flex items-center space-x-1">
-                <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+            <div class="mt-3 pt-3 border-t border-zinc-800 flex items-center justify-between">
+              <button onclick="sendQuickPrompt('Summarize the policies in ${lib.name}')" class="text-xs text-zinc-300 hover:text-white font-medium flex items-center space-x-1">
+                <i class="fa-solid fa-magnifying-glass text-[10px] mr-1"></i>
                 <span>Ask AI About Library</span>
               </button>
-              ${lib.webUrl ? `<a href="${lib.webUrl}" target="_blank" class="text-xs text-slate-500 hover:text-slate-300"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+              ${lib.webUrl ? `<a href="${lib.webUrl}" target="_blank" class="text-xs text-zinc-500 hover:text-white" title="Open in SharePoint"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
             </div>
           `;
           grid.appendChild(card);
@@ -1020,6 +1092,9 @@
         console.error("Libraries meta error:", e);
       }
     }
+
+    // Initial Load
+    fetchStatus();
   </script>
 </body>
 </html>
