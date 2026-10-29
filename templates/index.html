@@ -15,23 +15,49 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
-    /* Dark Navy & Soft Light Orange Scrollbars */
+    /* Reference Rainbow Velvet Palette */
+    :root {
+      --bg-dark: #0a0715;
+      --bg-surface: #120d24;
+      --bg-card: #181230;
+      --border-subtle: #2d2152;
+      --c-violet: #934aec;
+      --c-jade: #007a55;
+      --c-blue: #004fb0;
+      --c-purple: #6a157f;
+      --c-crimson: #b90021;
+      --c-rose: #dd1343;
+      --c-orange: #f74a00;
+    }
+
+    /* Velvet Scrollbars */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
     ::-webkit-scrollbar-track {
-      background: #080e1e;
+      background: #0a0715;
     }
     ::-webkit-scrollbar-thumb {
-      background: #1c2b4e;
+      background: #33265d;
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #2b3e6d;
+      background: #4a3885;
     }
 
-    /* Markdown Styling in Dark Blue & Soft Light Orange */
+    /* Rainbow Spectrum Border */
+    .rainbow-border-bottom {
+      border-bottom: 2px solid transparent;
+      border-image: linear-gradient(to right, #007a55 0%, #004fb0 20%, #6a157f 40%, #b90021 60%, #dd1343 80%, #f74a00 100%) 1;
+    }
+
+    .rainbow-gradient-bar {
+      height: 3px;
+      background: linear-gradient(to right, #007a55 0%, #004fb0 20%, #6a157f 40%, #b90021 60%, #dd1343 80%, #f74a00 100%);
+    }
+
+    /* Markdown Body Styling */
     .markdown-body {
       color: #e2e8f0;
       line-height: 1.65;
@@ -44,8 +70,8 @@
       margin-bottom: 0;
     }
     .markdown-body pre {
-      background-color: #060b17;
-      border: 1px solid #1c2b4e;
+      background-color: #07050e;
+      border: 1px solid #2d2152;
       border-radius: 0.5rem;
       padding: 0.85rem;
       overflow-x: auto;
@@ -56,8 +82,8 @@
       font-size: 0.9em;
     }
     .markdown-body p code {
-      background: #131e38;
-      border: 1px solid #1c2b4e;
+      background: #1f173d;
+      border: 1px solid #362868;
       padding: 0.15rem 0.35rem;
       border-radius: 0.25rem;
       color: #fed7aa;
@@ -86,24 +112,24 @@
       font-size: 0.88rem;
     }
     .markdown-body th {
-      background-color: #121c35;
-      border: 1px solid #24355f;
+      background-color: #1a1336;
+      border: 1px solid #362868;
       padding: 0.6rem 0.8rem;
       text-align: left;
       color: #fed7aa;
       font-weight: 600;
     }
     .markdown-body td {
-      border: 1px solid #1c2b4e;
+      border: 1px solid #2a1e50;
       padding: 0.5rem 0.8rem;
       color: #cbd5e1;
     }
     .markdown-body tr:nth-child(even) {
-      background-color: #0a1124;
+      background-color: #0d0a1c;
     }
     .markdown-body blockquote {
-      border-left: 3px solid #f97316;
-      background: #0f1933;
+      border-left: 3px solid #dd1343;
+      background: #181230;
       padding: 0.5rem 0.85rem;
       color: #fed7aa;
       margin: 0.75rem 0;
@@ -114,7 +140,7 @@
       content: '▋';
       display: inline-block;
       vertical-align: middle;
-      color: #f97316;
+      color: #f74a00;
       animation: blink 0.8s infinite;
       margin-left: 2px;
     }
@@ -124,18 +150,22 @@
     }
   </style>
 </head>
-<body class="bg-[#080e1e] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-[#ea580c] selection:text-white">
+<body class="bg-[#0a0715] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-[#dd1343] selection:text-white">
+
+  <!-- Top Rainbow Spectrum Accent Line -->
+  <div class="rainbow-gradient-bar"></div>
 
   <!-- Top Navigation Bar -->
-  <header class="bg-[#0b1329]/95 backdrop-blur border-b border-[#1c2b4e] sticky top-0 z-50 px-4 lg:px-8 py-3 flex items-center justify-between">
+  <header class="bg-[#120d24]/95 backdrop-blur border-b border-[#281e4a] sticky top-0 z-50 px-4 lg:px-8 py-3 flex items-center justify-between">
     <div class="flex items-center space-x-3">
-      <div class="w-10 h-10 rounded-xl bg-[#ea580c] text-white flex items-center justify-center font-bold text-lg shadow-md shadow-orange-950/40">
+      <!-- Gradient Logo Icon -->
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#007a55] via-[#004fb0] via-[#dd1343] to-[#f74a00] text-white flex items-center justify-center font-bold text-lg shadow-lg">
         <i class="fa-solid fa-layer-group"></i>
       </div>
       <div>
         <div class="flex items-center space-x-2">
           <h1 class="text-base sm:text-lg font-bold text-white tracking-wide">SharePoint AI Assistant</h1>
-          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-[#1c2b4e] text-[#fed7aa] border border-[#2b3e6d]">
+          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-[#241a4a] text-[#fed7aa] border border-[#3b2b73]">
             {{ deployment }}
           </span>
         </div>
@@ -148,36 +178,36 @@
       </div>
     </div>
 
-    <!-- Center Navigation Tabs -->
-    <div class="hidden md:flex items-center bg-[#070c1a] p-1 rounded-xl border border-[#1c2b4e] space-x-1">
-      <button id="tab-chat-btn" onclick="switchTab('chat')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-[#ea580c] text-white shadow transition-all flex items-center space-x-1.5">
+    <!-- Center Navigation Tabs (Themed after the 4 major rainbow bands) -->
+    <div class="hidden md:flex items-center bg-[#07050e] p-1 rounded-xl border border-[#281e4a] space-x-1">
+      <button id="tab-chat-btn" onclick="switchTab('chat')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-[#004fb0] text-white shadow transition-all flex items-center space-x-1.5">
         <i class="fa-solid fa-comments"></i>
         <span>AI Assistant</span>
       </button>
-      <button id="tab-policy-btn" onclick="switchTab('policy')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-[#fed7aa] transition-all flex items-center space-x-1.5">
-        <i class="fa-solid fa-file-lines"></i>
+      <button id="tab-policy-btn" onclick="switchTab('policy')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-file-lines text-[#34d399]"></i>
         <span>Policy Knowledge Base</span>
       </button>
-      <button id="tab-lists-btn" onclick="switchTab('lists')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-[#fed7aa] transition-all flex items-center space-x-1.5">
-        <i class="fa-solid fa-table"></i>
+      <button id="tab-lists-btn" onclick="switchTab('lists')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-table text-[#f87171]"></i>
         <span>Lists Explorer</span>
       </button>
-      <button id="tab-libraries-btn" onclick="switchTab('libraries')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-[#fed7aa] transition-all flex items-center space-x-1.5">
-        <i class="fa-solid fa-folder"></i>
+      <button id="tab-libraries-btn" onclick="switchTab('libraries')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-folder text-[#fb923c]"></i>
         <span>Document Libraries & Upload</span>
       </button>
     </div>
 
-    <!-- Right Controls: Status & Re-sync -->
+    <!-- Right Controls: Status & Rainbow Sync Button -->
     <div class="flex items-center space-x-2">
       <!-- Status Badge -->
-      <div id="status-indicator" class="flex items-center space-x-2 bg-[#0e172e] px-3 py-1.5 rounded-lg border border-[#1c2b4e] text-xs">
-        <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-[#f97316] animate-pulse"></span>
+      <div id="status-indicator" class="flex items-center space-x-2 bg-[#181230] px-3 py-1.5 rounded-lg border border-[#2b204e] text-xs">
+        <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-[#007a55] animate-pulse"></span>
         <span id="status-text" class="text-slate-300 font-medium truncate max-w-[150px] sm:max-w-none">Checking...</span>
       </div>
 
-      <!-- Prominent Refresh / Sync Button -->
-      <button id="sync-btn" onclick="triggerSync()" title="Refresh and sync data from SharePoint" class="px-3 py-1.5 bg-[#ea580c] hover:bg-[#f97316] text-white text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 shadow shadow-orange-950/40">
+      <!-- Prominent Rainbow Refresh Button -->
+      <button id="sync-btn" onclick="triggerSync()" title="Refresh and sync data from SharePoint" class="px-3.5 py-1.5 bg-gradient-to-r from-[#004fb0] via-[#6a157f] via-[#dd1343] to-[#f74a00] hover:opacity-95 text-white text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 shadow-md">
         <i id="sync-icon" class="fa-solid fa-rotate"></i>
         <span class="hidden sm:inline">Refresh Data</span>
       </button>
@@ -185,16 +215,16 @@
   </header>
 
   <!-- Mobile Tab Bar -->
-  <div class="flex md:hidden bg-[#0b1329] border-b border-[#1c2b4e] px-3 py-2 space-x-1 overflow-x-auto text-xs">
-    <button onclick="switchTab('chat')" id="m-tab-chat" class="px-3 py-1.5 font-semibold rounded-lg bg-[#ea580c] text-white whitespace-nowrap">Chat</button>
-    <button onclick="switchTab('policy')" id="m-tab-policy" class="px-3 py-1.5 font-semibold rounded-lg bg-[#0e172e] text-slate-300 whitespace-nowrap">Policy KB</button>
-    <button onclick="switchTab('lists')" id="m-tab-lists" class="px-3 py-1.5 font-semibold rounded-lg bg-[#0e172e] text-slate-300 whitespace-nowrap">Lists</button>
-    <button onclick="switchTab('libraries')" id="m-tab-libraries" class="px-3 py-1.5 font-semibold rounded-lg bg-[#0e172e] text-slate-300 whitespace-nowrap">Libraries & Upload</button>
+  <div class="flex md:hidden bg-[#120d24] border-b border-[#281e4a] px-3 py-2 space-x-1 overflow-x-auto text-xs">
+    <button onclick="switchTab('chat')" id="m-tab-chat" class="px-3 py-1.5 font-semibold rounded-lg bg-[#004fb0] text-white whitespace-nowrap">Chat</button>
+    <button onclick="switchTab('policy')" id="m-tab-policy" class="px-3 py-1.5 font-semibold rounded-lg bg-[#181230] text-slate-300 whitespace-nowrap">Policy KB</button>
+    <button onclick="switchTab('lists')" id="m-tab-lists" class="px-3 py-1.5 font-semibold rounded-lg bg-[#181230] text-slate-300 whitespace-nowrap">Lists</button>
+    <button onclick="switchTab('libraries')" id="m-tab-libraries" class="px-3 py-1.5 font-semibold rounded-lg bg-[#181230] text-slate-300 whitespace-nowrap">Libraries & Upload</button>
   </div>
 
   <!-- Notification Toast Banner -->
-  <div id="toast-banner" class="hidden fixed bottom-6 right-6 z-50 bg-[#0f1933] text-[#fed7aa] px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-[#ea580c]/60 transition-all">
-    <i id="toast-icon" class="fa-solid fa-circle-check text-lg text-[#f97316]"></i>
+  <div id="toast-banner" class="hidden fixed bottom-6 right-6 z-50 bg-[#181230] text-[#ffedd5] px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-[#dd1343]/70 transition-all">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-lg text-[#007a55]"></i>
     <span id="toast-text">Message</span>
   </div>
 
@@ -204,37 +234,37 @@
     <!-- 1. CHAT TAB -->
     <div id="view-chat" class="flex-1 flex flex-col h-full overflow-hidden">
       
-      <!-- Quick Prompts Pill Carousel -->
+      <!-- Quick Prompts Pill Carousel (Rainbow Color Scheme) -->
       <div class="mb-3 flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-        <span class="text-slate-400 shrink-0 font-medium"><i class="fa-solid fa-bolt mr-1 text-[#f97316]"></i> Quick Prompts:</span>
-        <button onclick="sendQuickPrompt('What are the leave entitlements and notice period rules in the HR Policy Manual?')" class="bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] hover:border-[#ea580c]/60 text-slate-300 hover:text-[#fed7aa] px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          Leave Entitlements
+        <span class="text-slate-400 shrink-0 font-medium"><i class="fa-solid fa-bolt mr-1 text-[#f74a00]"></i> Quick Prompts:</span>
+        <button onclick="sendQuickPrompt('What are the leave entitlements and notice period rules in the HR Policy Manual?')" class="bg-[#181230] hover:bg-[#231a47] border border-[#007a55]/60 text-[#a7f3d0] hover:border-[#007a55] px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-circle text-[7px] text-[#007a55] mr-1.5"></i>Leave Entitlements
         </button>
-        <button onclick="sendQuickPrompt('What are the daily travel allowance and expense reimbursement limits in the Financial Policy Guidelines?')" class="bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] hover:border-[#ea580c]/60 text-slate-300 hover:text-[#fed7aa] px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          Travel & Expense Limits
+        <button onclick="sendQuickPrompt('What are the daily travel allowance and expense reimbursement limits in the Financial Policy Guidelines?')" class="bg-[#181230] hover:bg-[#231a47] border border-[#004fb0]/60 text-[#bfdbfe] hover:border-[#004fb0] px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-circle text-[7px] text-[#004fb0] mr-1.5"></i>Travel & Expense Limits
         </button>
-        <button onclick="sendQuickPrompt('What are the SLA response and resolution timeframes for P1, P2, P3 issues in Customer Support SLA Handbook?')" class="bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] hover:border-[#ea580c]/60 text-slate-300 hover:text-[#fed7aa] px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          Customer Support SLAs
+        <button onclick="sendQuickPrompt('What are the SLA response and resolution timeframes for P1, P2, P3 issues in Customer Support SLA Handbook?')" class="bg-[#181230] hover:bg-[#231a47] border border-[#b90021]/60 text-[#fca5a5] hover:border-[#b90021] px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-circle text-[7px] text-[#b90021] mr-1.5"></i>Customer Support SLAs
         </button>
-        <button onclick="sendQuickPrompt('What are the code review and Git branching rules in the Software Engineering Standards?')" class="bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] hover:border-[#ea580c]/60 text-slate-300 hover:text-[#fed7aa] px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          Engineering Standards
+        <button onclick="sendQuickPrompt('What are the code review and Git branching rules in the Software Engineering Standards?')" class="bg-[#181230] hover:bg-[#231a47] border border-[#dd1343]/60 text-[#fbcfe8] hover:border-[#dd1343] px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-circle text-[7px] text-[#dd1343] mr-1.5"></i>Engineering Standards
         </button>
-        <button onclick="sendQuickPrompt('Give me a table of all Team Leads from Employee Details list with their email and location.')" class="bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] hover:border-[#ea580c]/60 text-slate-300 hover:text-[#fed7aa] px-3 py-1 rounded-full whitespace-nowrap transition-all">
-          Team Leads Directory
+        <button onclick="sendQuickPrompt('Give me a table of all Team Leads from Employee Details list with their email and location.')" class="bg-[#181230] hover:bg-[#231a47] border border-[#f74a00]/60 text-[#fed7aa] hover:border-[#f74a00] px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-circle text-[7px] text-[#f74a00] mr-1.5"></i>Team Leads Directory
         </button>
       </div>
 
       <!-- Chat Messages Scroll Area -->
-      <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 p-4 bg-[#0a1124]/70 rounded-2xl border border-[#1c2b4e] mb-4 shadow-inner">
+      <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 p-4 bg-[#0d0a1c]/80 rounded-2xl border border-[#281e4a] mb-4 shadow-inner">
         <!-- Welcome Message -->
         <div class="flex items-start space-x-3 message-bubble">
-          <div class="w-8 h-8 rounded-lg bg-[#ea580c] text-white flex items-center justify-center shrink-0 mt-1 shadow font-bold">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#004fb0] via-[#dd1343] to-[#f74a00] text-white flex items-center justify-center shrink-0 mt-1 shadow font-bold">
             <i class="fa-solid fa-robot text-sm"></i>
           </div>
-          <div class="flex-1 bg-[#0e172e] border border-[#1c2b4e] rounded-2xl p-4 text-slate-200 shadow-sm">
+          <div class="flex-1 bg-[#140e2a] border border-[#2b2050] rounded-2xl p-4 text-slate-200 shadow-sm">
             <div class="font-bold text-sm text-[#fed7aa] mb-1 flex items-center space-x-2">
               <span>SharePoint Policy & Data Assistant</span>
-              <span class="text-[10px] text-[#f97316] font-normal px-2 py-0.5 rounded bg-[#131e38] border border-[#24355f]">Online</span>
+              <span class="text-[10px] text-[#6ee7b7] font-normal px-2 py-0.5 rounded bg-[#0b241c] border border-[#007a55]">Online</span>
             </div>
             <div class="markdown-body">
               <p>Welcome! I am your <strong>Enterprise SharePoint AI Assistant</strong>. I perform real-time <strong>RAG search</strong> across your corporate policy manuals and tabular lists:</p>
@@ -249,10 +279,10 @@
       </div>
 
       <!-- Chat Input Area -->
-      <div class="bg-[#0b1329] border border-[#1c2b4e] rounded-2xl p-3 shadow-xl flex flex-col space-y-2">
+      <div class="bg-[#120d24] border border-[#281e4a] rounded-2xl p-3 shadow-xl flex flex-col space-y-2">
         <!-- Live Tool Status -->
-        <div id="live-tool-status" class="hidden flex items-center space-x-2 text-xs text-[#fed7aa] bg-[#0e172e] px-3 py-1.5 rounded-lg border border-[#1c2b4e]">
-          <i class="fa-solid fa-circle-notch fa-spin text-[#f97316]"></i>
+        <div id="live-tool-status" class="hidden flex items-center space-x-2 text-xs text-[#fed7aa] bg-[#1a1336] px-3 py-1.5 rounded-lg border border-[#3b2b73]">
+          <i class="fa-solid fa-circle-notch fa-spin text-[#f74a00]"></i>
           <span id="live-tool-text">Searching SharePoint knowledge base...</span>
         </div>
 
@@ -261,14 +291,14 @@
             id="user-input"
             rows="1"
             placeholder="Ask anything from company policies, SLAs, or employee lists..."
-            class="flex-1 bg-[#060b17] text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#f97316] border border-[#1c2b4e] resize-none placeholder-slate-500"
+            class="flex-1 bg-[#090614] text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-1 focus:ring-[#004fb0] border border-[#2b2050] resize-none placeholder-slate-500"
             onkeydown="handleKey(event)"
           ></textarea>
 
           <button
             id="send-btn"
             onclick="sendMessage()"
-            class="px-4 py-2.5 bg-[#ea580c] hover:bg-[#f97316] text-white font-semibold text-sm rounded-xl transition-all flex items-center space-x-1.5 shadow shrink-0"
+            class="px-4 py-2.5 bg-gradient-to-r from-[#dd1343] to-[#f74a00] hover:opacity-95 text-white font-semibold text-sm rounded-xl transition-all flex items-center space-x-1.5 shadow shrink-0"
           >
             <span>Ask</span>
             <i class="fa-solid fa-paper-plane text-xs"></i>
@@ -282,17 +312,17 @@
       <div class="flex items-center justify-between mb-4">
         <div>
           <h2 class="text-lg font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-file-shield text-[#f97316]"></i>
+            <i class="fa-solid fa-file-shield text-[#007a55]"></i>
             <span>Policy Documents Knowledge Base</span>
           </h2>
           <p class="text-xs text-slate-400">Indexed corporate policy manuals, guidelines, and SOPs parsed for RAG</p>
         </div>
         <div class="flex items-center space-x-2">
-          <button onclick="loadLibrariesMeta()" class="px-3 py-1.5 bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] text-xs text-[#fed7aa] rounded-lg flex items-center space-x-1.5 transition-all">
+          <button onclick="loadLibrariesMeta()" class="px-3 py-1.5 bg-[#181230] hover:bg-[#231a47] border border-[#2b204e] text-xs text-[#fed7aa] rounded-lg flex items-center space-x-1.5 transition-all">
             <i class="fa-solid fa-arrows-rotate"></i>
             <span>Refresh View</span>
           </button>
-          <button onclick="switchTab('libraries')" class="px-3 py-1.5 bg-[#ea580c] hover:bg-[#f97316] text-white text-xs font-semibold rounded-lg flex items-center space-x-1.5 transition-all shadow">
+          <button onclick="switchTab('libraries')" class="px-3 py-1.5 bg-gradient-to-r from-[#007a55] to-[#004fb0] text-white text-xs font-semibold rounded-lg flex items-center space-x-1.5 transition-all shadow">
             <i class="fa-solid fa-plus"></i>
             <span>Upload New Document</span>
           </button>
@@ -307,10 +337,10 @@
             id="policy-search-box"
             type="text"
             placeholder="Search policies (e.g., paternity leave, travel allowance, SLA response time, VPN)..."
-            class="w-full bg-[#0a1124] border border-[#1c2b4e] rounded-xl pl-9 pr-24 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#f97316]"
+            class="w-full bg-[#0d0a1c] border border-[#281e4a] rounded-xl pl-9 pr-24 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#004fb0]"
             onkeydown="if(event.key === 'Enter') executePolicySearch()"
           />
-          <button onclick="executePolicySearch()" class="absolute right-2 top-1.5 px-3 py-1 bg-[#ea580c] hover:bg-[#f97316] text-white font-semibold text-xs rounded-lg transition-all">
+          <button onclick="executePolicySearch()" class="absolute right-2 top-1.5 px-3 py-1 bg-gradient-to-r from-[#007a55] to-[#004fb0] text-white font-semibold text-xs rounded-lg hover:opacity-95 transition-all">
             Search
           </button>
         </div>
@@ -327,17 +357,17 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <div>
           <h2 class="text-lg font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-table text-[#f97316]"></i>
+            <i class="fa-solid fa-table text-[#dd1343]"></i>
             <span>SharePoint Lists Explorer</span>
           </h2>
           <p class="text-xs text-slate-400">Explore tabular rows from all 11 SharePoint lists</p>
         </div>
 
         <div class="flex items-center space-x-2">
-          <select id="list-selector" onchange="loadSelectedList()" class="bg-[#0a1124] border border-[#1c2b4e] text-[#fed7aa] text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-[#f97316]">
+          <select id="list-selector" onchange="loadSelectedList()" class="bg-[#0d0a1c] border border-[#281e4a] text-[#fed7aa] text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-[#dd1343]">
             <option value="">-- Choose a SharePoint List --</option>
           </select>
-          <button onclick="loadSelectedList()" class="px-3 py-2 bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] text-xs text-[#fed7aa] rounded-xl flex items-center space-x-1.5 transition-all">
+          <button onclick="loadSelectedList()" class="px-3 py-2 bg-[#181230] hover:bg-[#231a47] border border-[#2b204e] text-xs text-[#fed7aa] rounded-xl flex items-center space-x-1.5 transition-all">
             <i class="fa-solid fa-arrows-rotate"></i>
             <span>Refresh</span>
           </button>
@@ -350,13 +380,13 @@
           id="list-search-box"
           type="text"
           placeholder="Filter records in selected list..."
-          class="w-full bg-[#0a1124] border border-[#1c2b4e] rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#f97316]"
+          class="w-full bg-[#0d0a1c] border border-[#281e4a] rounded-xl px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#dd1343]"
           oninput="filterListTable()"
         />
       </div>
 
       <!-- Table Container -->
-      <div id="list-table-container" class="flex-1 overflow-auto bg-[#0a1124] border border-[#1c2b4e] rounded-2xl shadow-inner">
+      <div id="list-table-container" class="flex-1 overflow-auto bg-[#0d0a1c] border border-[#281e4a] rounded-2xl shadow-inner">
         <p class="text-xs text-slate-400 p-4">Select a list above to view records.</p>
       </div>
     </div>
@@ -368,39 +398,39 @@
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-lg font-bold text-white flex items-center space-x-2">
-            <i class="fa-solid fa-folder text-[#f97316]"></i>
+            <i class="fa-solid fa-folder text-[#f74a00]"></i>
             <span>Document Libraries & Management</span>
           </h2>
           <p class="text-xs text-slate-400">Upload new documents to SharePoint and delete existing files directly</p>
         </div>
-        <button onclick="loadLibrariesMeta()" class="px-3 py-1.5 bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] text-xs text-[#fed7aa] rounded-lg flex items-center space-x-1.5 transition-all">
+        <button onclick="loadLibrariesMeta()" class="px-3 py-1.5 bg-[#181230] hover:bg-[#231a47] border border-[#2b204e] text-xs text-[#fed7aa] rounded-lg flex items-center space-x-1.5 transition-all">
           <i class="fa-solid fa-arrows-rotate"></i>
           <span>Refresh Files</span>
         </button>
       </div>
 
       <!-- Upload Document Card -->
-      <div class="bg-[#0b1329] border border-[#1c2b4e] rounded-2xl p-6 shadow-xl">
+      <div class="bg-[#120d24] border border-[#281e4a] rounded-2xl p-6 shadow-xl">
         <h3 class="text-sm font-bold text-white mb-2 flex items-center space-x-2">
-          <i class="fa-solid fa-cloud-arrow-up text-[#f97316]"></i>
+          <i class="fa-solid fa-cloud-arrow-up text-[#f74a00]"></i>
           <span>Upload Document to SharePoint</span>
         </h3>
         <p class="text-xs text-slate-400 mb-4">Supported formats: PDF, DOCX, XLSX, TXT. Files are uploaded directly to your SharePoint Drive and instantly chunked into the RAG index.</p>
 
         <div class="flex flex-col sm:flex-row items-center gap-3">
-          <select id="upload-drive-select" class="bg-[#060b17] border border-[#1c2b4e] text-[#fed7aa] text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-[#f97316] w-full sm:w-auto">
+          <select id="upload-drive-select" class="bg-[#090614] border border-[#281e4a] text-[#fed7aa] text-xs rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-[#f74a00] w-full sm:w-auto">
             <!-- Populated via JS -->
           </select>
 
-          <label class="cursor-pointer bg-[#ea580c] hover:bg-[#f97316] text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all shadow shadow-orange-950/40 w-full sm:w-auto justify-center">
+          <label class="cursor-pointer bg-gradient-to-r from-[#dd1343] to-[#f74a00] hover:opacity-95 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-all shadow w-full sm:w-auto justify-center">
             <i class="fa-solid fa-file-arrow-up"></i>
             <span>Choose File & Upload</span>
             <input type="file" class="hidden" accept=".pdf,.docx,.xlsx,.txt" onchange="handleFileUpload(event)" />
           </label>
         </div>
 
-        <div id="upload-progress-alert" class="hidden mt-4 p-3 bg-[#0e172e] border border-[#1c2b4e] rounded-xl text-xs text-[#fed7aa] flex items-center space-x-2">
-          <i class="fa-solid fa-circle-notch fa-spin text-[#f97316]"></i>
+        <div id="upload-progress-alert" class="hidden mt-4 p-3 bg-[#181230] border border-[#2b204e] rounded-xl text-xs text-[#fed7aa] flex items-center space-x-2">
+          <i class="fa-solid fa-circle-notch fa-spin text-[#f74a00]"></i>
           <span id="upload-progress-text">Uploading to SharePoint...</span>
         </div>
       </div>
@@ -408,7 +438,7 @@
       <!-- Existing Libraries & Files Grid -->
       <div>
         <h3 class="text-sm font-bold text-white mb-3 flex items-center space-x-2">
-          <i class="fa-solid fa-files text-[#f97316]"></i>
+          <i class="fa-solid fa-files text-[#007a55]"></i>
           <span>Existing Libraries & Documents</span>
         </h3>
         <div id="libraries-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -421,9 +451,9 @@
   </main>
 
   <!-- Delete Confirmation Modal -->
-  <div id="delete-modal" class="hidden fixed inset-0 z-50 bg-[#060b17]/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-[#0b1329] border border-[#1c2b4e] rounded-2xl max-w-md w-full p-6 shadow-2xl">
-      <div class="w-12 h-12 rounded-full bg-red-950/50 border border-red-800 text-red-400 flex items-center justify-center text-xl mb-4">
+  <div id="delete-modal" class="hidden fixed inset-0 z-50 bg-[#07050e]/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#120d24] border border-[#281e4a] rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="w-12 h-12 rounded-full bg-[#b90021]/20 border border-[#b90021] text-[#fca5a5] flex items-center justify-center text-xl mb-4">
         <i class="fa-solid fa-trash-can"></i>
       </div>
       <h3 class="text-base font-bold text-white mb-1">Delete Document?</h3>
@@ -431,10 +461,10 @@
         Are you sure you want to delete this file from SharePoint and purge its chunks from the AI assistant?
       </p>
       <div class="flex items-center justify-end space-x-3">
-        <button onclick="closeDeleteModal()" class="px-4 py-2 bg-[#0e172e] hover:bg-[#152345] border border-[#1c2b4e] text-xs font-semibold text-slate-300 rounded-xl transition-all">
+        <button onclick="closeDeleteModal()" class="px-4 py-2 bg-[#181230] hover:bg-[#231a47] border border-[#2b204e] text-xs font-semibold text-slate-300 rounded-xl transition-all">
           Cancel
         </button>
-        <button id="confirm-delete-btn" onclick="executeFileDelete()" class="px-4 py-2 bg-red-600 hover:bg-red-500 text-xs font-semibold text-white rounded-xl transition-all shadow">
+        <button id="confirm-delete-btn" onclick="executeFileDelete()" class="px-4 py-2 bg-[#b90021] hover:bg-[#d91438] text-xs font-semibold text-white rounded-xl transition-all shadow">
           Yes, Delete File
         </button>
       </div>
@@ -459,18 +489,18 @@
 
       text.textContent = message;
       if (isError) {
-        banner.className = "fixed bottom-6 right-6 z-50 bg-[#1e1014] text-red-200 px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-red-800/80 transition-all";
-        icon.className = "fa-solid fa-circle-exclamation text-lg text-red-400";
+        banner.className = "fixed bottom-6 right-6 z-50 bg-[#1e0a12] text-[#fca5a5] px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-[#b90021] transition-all";
+        icon.className = "fa-solid fa-circle-exclamation text-lg text-[#b90021]";
       } else {
-        banner.className = "fixed bottom-6 right-6 z-50 bg-[#0f1933] text-[#fed7aa] px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-[#ea580c]/60 transition-all";
-        icon.className = "fa-solid fa-circle-check text-lg text-[#f97316]";
+        banner.className = "fixed bottom-6 right-6 z-50 bg-[#181230] text-[#ffedd5] px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 text-sm font-medium border border-[#007a55] transition-all";
+        icon.className = "fa-solid fa-circle-check text-lg text-[#007a55]";
       }
 
       banner.classList.remove("hidden");
       setTimeout(() => banner.classList.add("hidden"), 4000);
     }
 
-    // Switch Tab
+    // Switch Tab (Harmonious Rainbow colors for each section)
     function switchTab(tab) {
       currentTab = tab;
       const views = ["chat", "policy", "lists", "libraries"];
@@ -489,21 +519,21 @@
       const btnLists = document.getElementById("tab-lists-btn");
       const btnLibraries = document.getElementById("tab-libraries-btn");
 
-      const activeClass = "bg-[#ea580c] text-white shadow";
-      const inactiveClass = "text-slate-400 hover:text-[#fed7aa]";
+      const inactiveClass = "text-slate-400 hover:text-white";
 
-      btnChat.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'chat' ? activeClass : inactiveClass}`;
-      btnPolicy.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'policy' ? activeClass : inactiveClass}`;
-      btnLists.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'lists' ? activeClass : inactiveClass}`;
-      btnLibraries.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'libraries' ? activeClass : inactiveClass}`;
+      btnChat.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'chat' ? 'bg-[#004fb0] text-white shadow' : inactiveClass}`;
+      btnPolicy.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'policy' ? 'bg-[#007a55] text-white shadow' : inactiveClass}`;
+      btnLists.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'lists' ? 'bg-[#dd1343] text-white shadow' : inactiveClass}`;
+      btnLibraries.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'libraries' ? 'bg-[#f74a00] text-white shadow' : inactiveClass}`;
 
       // Mobile
       ["chat", "policy", "lists", "libraries"].forEach(m => {
         const mBtn = document.getElementById(`m-tab-${m}`);
         if (m === tab) {
-          mBtn.className = "px-3 py-1.5 font-semibold rounded-lg bg-[#ea580c] text-white whitespace-nowrap";
+          const tabColors = { chat: 'bg-[#004fb0]', policy: 'bg-[#007a55]', lists: 'bg-[#dd1343]', libraries: 'bg-[#f74a00]' };
+          mBtn.className = `px-3 py-1.5 font-semibold rounded-lg ${tabColors[m]} text-white whitespace-nowrap`;
         } else {
-          mBtn.className = "px-3 py-1.5 font-semibold rounded-lg bg-[#0e172e] text-slate-400 whitespace-nowrap";
+          mBtn.className = "px-3 py-1.5 font-semibold rounded-lg bg-[#181230] text-slate-400 whitespace-nowrap";
         }
       });
 
@@ -521,13 +551,13 @@
         const text = document.getElementById("status-text");
 
         if (data.status === "online") {
-          dot.className = "w-2.5 h-2.5 rounded-full bg-[#f97316]";
+          dot.className = "w-2.5 h-2.5 rounded-full bg-[#007a55]";
           text.textContent = `Online (${data.stats.total_list_items} items, ${data.stats.total_documents} docs, ${data.stats.indexed_chunks} chunks)`;
         } else if (data.status === "syncing") {
-          dot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
+          dot.className = "w-2.5 h-2.5 rounded-full bg-[#f74a00] animate-pulse";
           text.textContent = data.sync_message || "Syncing with SharePoint...";
         } else {
-          dot.className = "w-2.5 h-2.5 rounded-full bg-red-400";
+          dot.className = "w-2.5 h-2.5 rounded-full bg-[#b90021]";
           text.textContent = data.sync_message || "Offline";
         }
       } catch (e) {
@@ -541,7 +571,7 @@
       const statusText = document.getElementById("status-text");
       const statusDot = document.getElementById("status-dot");
       syncIcon.classList.add("fa-spin");
-      statusDot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
+      statusDot.className = "w-2.5 h-2.5 rounded-full bg-[#f74a00] animate-pulse";
       statusText.textContent = "Syncing from SharePoint...";
 
       try {
@@ -558,7 +588,7 @@
             if (sData.status === "online" || attempts > 30) {
               clearInterval(pollInterval);
               syncIcon.classList.remove("fa-spin");
-              statusDot.className = "w-2.5 h-2.5 rounded-full bg-[#f97316]";
+              statusDot.className = "w-2.5 h-2.5 rounded-full bg-[#007a55]";
               statusText.textContent = `Online (${sData.stats.total_list_items} items, ${sData.stats.total_documents} docs, ${sData.stats.indexed_chunks} chunks)`;
               loadListsMeta();
               loadLibrariesMeta();
@@ -574,7 +604,7 @@
 
       } catch (e) {
         syncIcon.classList.remove("fa-spin");
-        statusDot.className = "w-2.5 h-2.5 rounded-full bg-red-400";
+        statusDot.className = "w-2.5 h-2.5 rounded-full bg-[#b90021]";
         statusText.textContent = "Sync failed: " + e.message;
         showToast("Sync failed: " + e.message, true);
       }
@@ -692,7 +722,7 @@
       inputEl.style.height = "auto";
       isGenerating = true;
 
-      // Append user bubble
+      // Append user bubble (Deep Cobalt Blue)
       appendUserMessage(query);
       chatHistory.push({ role: "user", content: query });
 
@@ -712,7 +742,7 @@
 
         if (!response.ok) {
           const errText = await response.text();
-          botMsgObj.bodyEl.innerHTML = `<span class="text-red-400">Error: ${errText}</span>`;
+          botMsgObj.bodyEl.innerHTML = `<span class="text-[#fca5a5]">Error: ${errText}</span>`;
           isGenerating = false;
           statusBox.classList.add("hidden");
           return;
@@ -769,7 +799,7 @@
           }
         }
       } catch (err) {
-        botMsgObj.bodyEl.innerHTML = `<span class="text-red-400">Network error: ${err.message}</span>`;
+        botMsgObj.bodyEl.innerHTML = `<span class="text-[#fca5a5]">Network error: ${err.message}</span>`;
       } finally {
         isGenerating = false;
         statusBox.classList.add("hidden");
@@ -779,11 +809,11 @@
 
     function renderCitationPills(container, citations) {
       const div = document.createElement("div");
-      div.className = "mt-3 pt-3 border-t border-[#1c2b4e] flex flex-wrap gap-1.5 items-center";
+      div.className = "mt-3 pt-3 border-t border-[#2b2050] flex flex-wrap gap-1.5 items-center";
 
       const title = document.createElement("span");
       title.className = "text-[11px] text-[#fed7aa] font-semibold mr-1";
-      title.innerHTML = `<i class="fa-solid fa-bookmark text-[#f97316] mr-1"></i> Grounded Citations:`;
+      title.innerHTML = `<i class="fa-solid fa-bookmark text-[#f74a00] mr-1"></i> Grounded Citations:`;
       div.appendChild(title);
 
       const seen = new Set();
@@ -792,8 +822,8 @@
         seen.add(c.source);
 
         const pill = document.createElement("a");
-        pill.className = "px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#142245] hover:bg-[#1a2d5c] text-[#fed7aa] border border-[#24355f] flex items-center space-x-1 transition-all";
-        pill.innerHTML = `<i class="fa-solid fa-file-pdf text-[#ea580c]"></i><span>${c.source}</span>`;
+        pill.className = "px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#1e173d] hover:bg-[#2b2056] text-[#fed7aa] border border-[#3f2f76] flex items-center space-x-1 transition-all";
+        pill.innerHTML = `<i class="fa-solid fa-file-pdf text-[#dd1343]"></i><span>${c.source}</span>`;
         if (c.url) {
           pill.href = c.url;
           pill.target = "_blank";
@@ -810,10 +840,10 @@
       const div = document.createElement("div");
       div.className = "flex items-start justify-end space-x-3";
       div.innerHTML = `
-        <div class="bg-[#ea580c] text-white rounded-2xl rounded-tr-none px-4 py-2.5 max-w-[80%] shadow text-sm">
+        <div class="bg-gradient-to-r from-[#004fb0] to-[#551980] text-white rounded-2xl rounded-tr-none px-4 py-2.5 max-w-[80%] shadow text-sm">
           ${text.replace(/\n/g, '<br/>')}
         </div>
-        <div class="w-8 h-8 rounded-lg bg-[#0e172e] border border-[#1c2b4e] flex items-center justify-center text-[#fed7aa] shrink-0 mt-1">
+        <div class="w-8 h-8 rounded-lg bg-[#181230] border border-[#2b204e] flex items-center justify-center text-[#fed7aa] shrink-0 mt-1">
           <i class="fa-solid fa-user text-xs"></i>
         </div>
       `;
@@ -827,7 +857,7 @@
       div.className = "flex items-start space-x-3";
       
       const bubble = document.createElement("div");
-      bubble.className = "flex-1 bg-[#0e172e] border border-[#1c2b4e] rounded-2xl p-4 text-slate-200 shadow-sm max-w-[95%]";
+      bubble.className = "flex-1 bg-[#140e2a] border border-[#2b2050] rounded-2xl p-4 text-slate-200 shadow-sm max-w-[95%]";
 
       const header = document.createElement("div");
       header.className = "font-bold text-sm text-[#fed7aa] mb-1 flex items-center space-x-2";
@@ -841,7 +871,7 @@
       bubble.appendChild(body);
 
       div.innerHTML = `
-        <div class="w-8 h-8 rounded-lg bg-[#ea580c] text-white flex items-center justify-center shrink-0 mt-1 shadow font-bold">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#004fb0] via-[#dd1343] to-[#f74a00] text-white flex items-center justify-center shrink-0 mt-1 shadow font-bold">
           <i class="fa-solid fa-robot text-sm"></i>
         </div>
       `;
@@ -889,14 +919,14 @@
       currentSelectedListId = listId;
 
       const container = document.getElementById("list-table-container");
-      container.innerHTML = `<p class="text-xs text-[#fed7aa] p-4"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>Loading items...</p>`;
+      container.innerHTML = `<p class="text-xs text-[#fed7aa] p-4"><i class="fa-solid fa-circle-notch fa-spin mr-2 text-[#dd1343]"></i>Loading items...</p>`;
 
       try {
         const res = await fetch(`/api/lists/${listId}/items?limit=50`);
         const data = await res.json();
         renderListTable(data.items);
       } catch (e) {
-        container.innerHTML = `<p class="text-xs text-red-400 p-4">Failed to load items: ${e.message}</p>`;
+        container.innerHTML = `<p class="text-xs text-[#fca5a5] p-4">Failed to load items: ${e.message}</p>`;
       }
     }
 
@@ -918,15 +948,15 @@
       const columns = Object.keys(sampleFields);
 
       let html = `<table class="min-w-full text-xs text-left border-collapse">`;
-      html += `<thead><tr class="bg-[#0b1329] border-b border-[#1c2b4e] text-[#fed7aa] font-semibold">`;
+      html += `<thead><tr class="bg-[#120d24] border-b border-[#281e4a] text-[#fed7aa] font-semibold">`;
       columns.forEach(col => {
         html += `<th class="p-2.5 whitespace-nowrap">${col}</th>`;
       });
       html += `</tr></thead><tbody>`;
 
       items.forEach((it, idx) => {
-        const bg = idx % 2 === 0 ? "bg-[#0a1124]" : "bg-[#0e172e]/60";
-        html += `<tr class="${bg} border-b border-[#1c2b4e]/60 hover:bg-[#152345] transition-colors">`;
+        const bg = idx % 2 === 0 ? "bg-[#0d0a1c]" : "bg-[#140e2a]/60";
+        html += `<tr class="${bg} border-b border-[#281e4a]/60 hover:bg-[#1f173d] transition-colors">`;
         columns.forEach(col => {
           const val = it.fields[col] !== undefined ? String(it.fields[col]) : "";
           html += `<td class="p-2.5 text-slate-300 max-w-xs truncate" title="${val}">${val}</td>`;
@@ -958,13 +988,13 @@
 
       availableLibraries.forEach(lib => {
         html += `
-          <div class="bg-[#0b1329] border border-[#1c2b4e] rounded-2xl p-4 shadow-sm">
-            <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#1c2b4e]">
+          <div class="bg-[#120d24] border border-[#281e4a] rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#281e4a]">
               <span class="font-bold text-sm text-white flex items-center space-x-2">
-                <i class="fa-regular fa-folder text-[#f97316]"></i>
+                <i class="fa-regular fa-folder text-[#007a55]"></i>
                 <span>${lib.name}</span>
               </span>
-              <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#0e172e] text-[#fed7aa] border border-[#1c2b4e]">
+              <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#181230] text-[#a7f3d0] border border-[#007a55]/60">
                 ${lib.file_count} files
               </span>
             </div>
@@ -974,16 +1004,16 @@
         if (lib.files && lib.files.length > 0) {
           lib.files.forEach(f => {
             html += `
-              <li class="flex items-center justify-between p-2.5 rounded-xl bg-[#0e172e] border border-[#1c2b4e] text-xs">
+              <li class="flex items-center justify-between p-2.5 rounded-xl bg-[#181230] border border-[#281e4a] text-xs">
                 <div class="truncate mr-2">
                   <div class="font-medium text-slate-100 truncate" title="${f.name}">${f.name}</div>
                   <div class="text-[10px] text-slate-400">${Math.round(f.size / 1024)} KB</div>
                 </div>
                 <div class="flex items-center space-x-1.5 shrink-0">
-                  <button onclick="sendQuickPrompt('Summarize key rules and clauses from ${f.name}')" class="px-2.5 py-1 bg-[#ea580c] hover:bg-[#f97316] text-white rounded-lg font-medium text-[10px] transition-all">
+                  <button onclick="sendQuickPrompt('Summarize key rules and clauses from ${f.name}')" class="px-2.5 py-1 bg-gradient-to-r from-[#007a55] to-[#004fb0] hover:opacity-95 text-white rounded-lg font-medium text-[10px] transition-all">
                     Ask AI
                   </button>
-                  <button onclick="confirmDeleteFile('${lib.id}', '${f.id}', '${f.name}')" title="Delete document" class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
+                  <button onclick="confirmDeleteFile('${lib.id}', '${f.id}', '${f.name}')" title="Delete document" class="p-1.5 text-slate-400 hover:text-[#f87171] hover:bg-[#b90021]/15 rounded-lg transition-all">
                     <i class="fa-solid fa-trash-can text-xs"></i>
                   </button>
                 </div>
@@ -1033,7 +1063,7 @@
 
           // Card
           const card = document.createElement("div");
-          card.className = "bg-[#0b1329] border border-[#1c2b4e] rounded-2xl p-4 flex flex-col justify-between shadow-sm hover:border-[#2b3e6d] transition-all";
+          card.className = "bg-[#120d24] border border-[#281e4a] rounded-2xl p-4 flex flex-col justify-between shadow-sm hover:border-[#3b2b73] transition-all";
 
           let filesHtml = "";
           if (lib.files && lib.files.length > 0) {
@@ -1041,18 +1071,18 @@
               const icon = f.name.endsWith(".pdf") ? "fa-file-pdf" : (f.name.endsWith(".docx") ? "fa-file-word" : (f.name.endsWith(".xlsx") ? "fa-file-excel" : "fa-file-lines"));
               const sizeKb = Math.round(f.size / 1024);
               filesHtml += `
-                <li class="flex items-center justify-between py-2 border-b border-[#1c2b4e]/70 last:border-0 text-xs">
+                <li class="flex items-center justify-between py-2 border-b border-[#281e4a]/70 last:border-0 text-xs">
                   <div class="flex items-center space-x-2 truncate">
                     <i class="fa-solid ${icon} text-[#fed7aa]"></i>
                     <span class="truncate text-slate-200 font-medium" title="${f.name}">${f.name}</span>
                   </div>
                   <div class="flex items-center space-x-1.5 shrink-0 ml-2">
                     <span class="text-[10px] text-slate-400">${sizeKb} KB</span>
-                    <button onclick="sendQuickPrompt('Summarize key policies from ${f.name}')" title="Ask AI about this document" class="p-1.5 bg-[#0e172e] hover:bg-[#152345] text-[#fed7aa] rounded-lg transition-all border border-[#1c2b4e]">
+                    <button onclick="sendQuickPrompt('Summarize key policies from ${f.name}')" title="Ask AI about this document" class="p-1.5 bg-[#181230] hover:bg-[#231a47] text-[#fed7aa] rounded-lg transition-all border border-[#281e4a]">
                       <i class="fa-solid fa-sparkles text-[10px]"></i>
                     </button>
                     <!-- File Delete Button -->
-                    <button onclick="confirmDeleteFile('${lib.id}', '${f.id}', '${f.name}')" title="Delete file from SharePoint" class="p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all border border-transparent hover:border-red-900/50">
+                    <button onclick="confirmDeleteFile('${lib.id}', '${f.id}', '${f.name}')" title="Delete file from SharePoint" class="p-1.5 text-slate-400 hover:text-[#f87171] hover:bg-[#b90021]/15 rounded-lg transition-all">
                       <i class="fa-solid fa-trash-can text-[10px]"></i>
                     </button>
                   </div>
@@ -1067,10 +1097,10 @@
             <div>
               <div class="flex items-center justify-between mb-2">
                 <h3 class="font-bold text-sm text-white flex items-center space-x-2">
-                  <i class="fa-regular fa-folder text-[#f97316]"></i>
+                  <i class="fa-regular fa-folder text-[#007a55]"></i>
                   <span>${lib.name}</span>
                 </h3>
-                <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#0e172e] text-[#fed7aa] border border-[#1c2b4e]">
+                <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#181230] text-[#fed7aa] border border-[#281e4a]">
                   ${lib.file_count} files
                 </span>
               </div>
@@ -1078,9 +1108,9 @@
                 ${filesHtml}
               </ul>
             </div>
-            <div class="mt-3 pt-3 border-t border-[#1c2b4e] flex items-center justify-between">
+            <div class="mt-3 pt-3 border-t border-[#281e4a] flex items-center justify-between">
               <button onclick="sendQuickPrompt('Summarize the policies in ${lib.name}')" class="text-xs text-[#fed7aa] hover:text-white font-medium flex items-center space-x-1">
-                <i class="fa-solid fa-magnifying-glass text-[10px] mr-1 text-[#f97316]"></i>
+                <i class="fa-solid fa-magnifying-glass text-[10px] mr-1 text-[#f74a00]"></i>
                 <span>Ask AI About Library</span>
               </button>
               ${lib.webUrl ? `<a href="${lib.webUrl}" target="_blank" class="text-xs text-slate-400 hover:text-[#fed7aa]" title="Open in SharePoint"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
