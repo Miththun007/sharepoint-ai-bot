@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SharePoint AI Policy & Knowledge Base Assistant | Veelead Solutions</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Marked.js for Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Highlight.js for Code Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    /* Markdown Styling */
+    .markdown-body {
+      color: #e2e8f0;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .markdown-body p {
+      margin-bottom: 0.75rem;
+    }
+    .markdown-body p:last-child {
+      margin-bottom: 0;
+    }
+    .markdown-body pre {
+      background-color: #0b1120;
+      border: 1px solid #1e293b;
+      border-radius: 0.5rem;
+      padding: 0.85rem;
+      overflow-x: auto;
+      margin: 0.75rem 0;
+    }
+    .markdown-body code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9em;
+    }
+    .markdown-body p code {
+      background: #1e293b;
+      padding: 0.15rem 0.35rem;
+      border-radius: 0.25rem;
+      color: #38bdf8;
+    }
+    .markdown-body ul, .markdown-body ol {
+      margin-left: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .markdown-body ul {
+      list-style-type: disc;
+    }
+    .markdown-body ol {
+      list-style-type: decimal;
+    }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+      font-weight: 700;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      color: #f8fafc;
+    }
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .markdown-body th {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      color: #93c5fd;
+    }
+    .markdown-body td {
+      border: 1px solid #334155;
+      padding: 0.45rem 0.75rem;
+      color: #cbd5e1;
+    }
+    .markdown-body tr:nth-child(even) {
+      background-color: rgba(30, 41, 59, 0.4);
+    }
+    .markdown-body blockquote {
+      border-left: 4px solid #0284c7;
+      padding-left: 0.75rem;
+      color: #94a3b8;
+      margin: 0.75rem 0;
+    }
+
+    .typing-cursor::after {
+      content: '▋';
+      display: inline-block;
+      vertical-align: middle;
+      color: #0284c7;
+      animation: blink 0.8s infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 sticky top-0 z-50 px-4 lg:px-8 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
+        <i class="fa-solid fa-book-bookmark text-lg"></i>
+      </div>
+      <div>
+        <div class="flex items-center space-x-2">
+          <h1 class="text-lg font-bold text-white tracking-wide">SharePoint Policy & AI Assistant</h1>
+          <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">
+            {{ deployment }}
+          </span>
+        </div>
+        <div class="flex items-center space-x-2 text-xs text-slate-400">
+          <a href="{{ site_url }}" target="_blank" class="hover:text-sky-400 transition-colors flex items-center space-x-1">
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            <span>{{ site_name }} (SharePoint Online)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Navigation Tabs -->
+    <div class="hidden md:flex items-center bg-slate-950/60 p-1 rounded-xl border border-slate-800 space-x-1">
+      <button id="tab-chat-btn" onclick="switchTab('chat')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-sky-600 text-white shadow transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-comments"></i>
+        <span>AI Assistant</span>
+      </button>
+      <button id="tab-policy-btn" onclick="switchTab('policy')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-file-shield text-amber-400"></i>
+        <span>Policy Knowledge Base</span>
+      </button>
+      <button id="tab-lists-btn" onclick="switchTab('lists')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-table-list"></i>
+        <span>Lists Explorer</span>
+      </button>
+      <button id="tab-libraries-btn" onclick="switchTab('libraries')" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center space-x-1.5">
+        <i class="fa-solid fa-folder-open"></i>
+        <span>Document Libraries & Upload</span>
+      </button>
+    </div>
+
+    <!-- Right Controls: Status & Re-sync -->
+    <div class="flex items-center space-x-3">
+      <div id="status-indicator" class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700/50 text-xs">
+        <span id="status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="status-text" class="text-slate-300 font-medium">Ready</span>
+      </div>
+
+      <button id="sync-btn" onclick="triggerSync()" title="Refresh and sync data from SharePoint" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-all flex items-center space-x-1.5 hover:border-sky-500/50">
+        <i id="sync-icon" class="fa-solid fa-rotate"></i>
+        <span class="hidden sm:inline">Sync Data</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Tab Bar -->
+  <div class="flex md:hidden bg-slate-900 border-b border-slate-800 px-3 py-2 space-x-1 overflow-x-auto text-xs">
+    <button onclick="switchTab('chat')" id="m-tab-chat" class="px-3 py-1.5 font-semibold rounded-lg bg-sky-600 text-white whitespace-nowrap">Chat</button>
+    <button onclick="switchTab('policy')" id="m-tab-policy" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-800 text-slate-300 whitespace-nowrap">Policy KB</button>
+    <button onclick="switchTab('lists')" id="m-tab-lists" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-800 text-slate-300 whitespace-nowrap">Lists</button>
+    <button onclick="switchTab('libraries')" id="m-tab-libraries" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-800 text-slate-300 whitespace-nowrap">Libraries</button>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col overflow-hidden">
+
+    <!-- 1. CHAT TAB -->
+    <div id="view-chat" class="flex-1 flex flex-col h-full overflow-hidden">
+      
+      <!-- Quick Prompts Pill Carousel -->
+      <div class="mb-3 flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+        <span class="text-slate-500 shrink-0"><i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Policy & Data Quick Ask:</span>
+        <button onclick="sendQuickPrompt('What are the leave entitlements and notice period rules in the HR Policy Manual?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-calendar-check text-sky-400 mr-1"></i> HR Leave Entitlements
+        </button>
+        <button onclick="sendQuickPrompt('What are the daily travel allowance and expense reimbursement limits in the Financial Policy Guidelines?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-receipt text-emerald-400 mr-1"></i> Travel & Expense Limits
+        </button>
+        <button onclick="sendQuickPrompt('What are the SLA response and resolution timeframes for P1, P2, P3 issues in Customer Support SLA Handbook?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-clock text-rose-400 mr-1"></i> Customer Support SLAs
+        </button>
+        <button onclick="sendQuickPrompt('What are the code review and Git branching rules in the Software Engineering Standards?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-code text-indigo-400 mr-1"></i> Engineering Standards
+        </button>
+        <button onclick="sendQuickPrompt('How do I troubleshoot VPN connection errors according to the IT Troubleshooting Guide?')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-network-wired text-cyan-400 mr-1"></i> VPN Troubleshooting
+        </button>
+        <button onclick="sendQuickPrompt('Give me a table of all Team Leads from Employee Details list with their email and location.')" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/40 text-slate-300 px-3 py-1 rounded-full whitespace-nowrap transition-all">
+          <i class="fa-solid fa-user-tie text-amber-400 mr-1"></i> Team Leads Directory
+        </button>
+      </div>
+
+      <!-- Chat Messages Scroll Area -->
+      <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 p-4 bg-slate-900/50 rounded-2xl border border-slate-800/80 mb-4 shadow-inner">
+        <!-- Welcome Message -->
+        <div class="flex items-start space-x-3 message-bubble">
+          <div class="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white shrink-0 mt-1 shadow-md">
+            <i class="fa-solid fa-robot text-sm"></i>
+          </div>
+          <div class="flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 text-slate-200 shadow-sm">
+            <div class="font-bold text-sm text-sky-400 mb-1 flex items-center space-x-2">
+              <span>SharePoint Enterprise Policy & Data Assistant</span>
+              <span class="text-[10px] text-slate-400 font-normal">Active Live Integration</span>
+            </div>
+            <div class="markdown-body">
+              <p>Hello! I am your <strong>Enterprise Policy & SharePoint Knowledge Base Assistant</strong>. I perform deep <strong>Retrieval-Augmented Generation (RAG)</strong> over your corporate documents and lists:</p>
+              <ul>
+                <li><strong>Policy Knowledge Base</strong>:
+                  <ul>
+                    <li><code>01_HR_Policy_Manual.pdf</code> (Leave policies, code of conduct, probation, disciplinary rules)</li>
+                    <li><code>04_Financial_Policy_Guidelines.pdf</code> (Budgeting, expense reimbursement, travel allowances)</li>
+                    <li><code>06_Customer_Support_SLA_Handbook.pdf</code> (Severity tiers P1-P4, SLA response & resolution metrics)</li>
+                    <li><code>02_Software_Engineering_Standards.pdf</code> & <code>05_IT_Infrastructure_Architecture.pdf</code></li>
+                    <li><code>VLS-Onboarding-Offboarding-Guide.pdf</code> & <code>VLS-Performance-Appraisal-Policy.docx</code></li>
+                    <li><code>VLS-IT-020_Illustrated_Troubleshooting_Guide_v1.0.pdf</code></li>
+                  </ul>
+                </li>
+                <li><strong>SharePoint Lists</strong>: <code>Employee Details</code>, <code>PatientIntake</code>, <code>Employee Asset Subtable</code>, <code>News Sources</code>.</li>
+              </ul>
+              <p>Ask any policy question, procedure, SLA condition, or employee inquiry, and I will cite the exact document and clause!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input Area -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 shadow-lg flex flex-col space-y-2">
+        <!-- Active Tool Status Indicator -->
+        <div id="live-tool-status" class="hidden text-xs text-sky-400 flex items-center space-x-2 bg-sky-950/40 border border-sky-800/40 px-3 py-1.5 rounded-xl">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span id="live-tool-text">Querying Knowledge Base...</span>
+        </div>
+
+        <div class="flex items-end space-x-2">
+          <textarea id="user-input" rows="2" placeholder="Ask about HR policies, financial guidelines, SLAs, technical standards, or employee records..." 
+            class="flex-1 bg-transparent text-sm text-slate-100 placeholder-slate-500 focus:outline-none resize-none px-2 py-1 leading-relaxed"
+            onkeydown="handleKey(event)"></textarea>
+
+          <div class="flex items-center space-x-2">
+            <button id="clear-chat-btn" onclick="clearChat()" title="Clear Chat" class="p-2.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-xl transition-all">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+            <button id="send-btn" onclick="sendMessage()" class="px-4 py-2.5 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white rounded-xl font-medium text-sm transition-all shadow-md shadow-sky-600/30 flex items-center space-x-1.5">
+              <span>Send</span>
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. POLICY KNOWLEDGE BASE RAG EXPLORER TAB -->
+    <div id="view-policy" class="hidden flex-1 flex flex-col h-full overflow-hidden">
+      <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-file-shield text-amber-400"></i>
+            <span>Policy Documents Knowledge Base (RAG)</span>
+          </h2>
+          <p class="text-xs text-slate-400">Explore corporate policies, guidelines, and manuals indexed directly into the RAG engine.</p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="switchTab('libraries')" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium rounded-lg transition-all flex items-center space-x-1.5">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Upload New Policy Document</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Policy Topic Cards -->
+      <div class="flex-1 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
+        
+        <!-- HR Policies Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+          <div>
+            <div class="flex items-center space-x-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
+                <i class="fa-solid fa-user-group text-sm"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm text-white">HR & People Policies</h3>
+                <span class="text-[11px] text-slate-400">HR Manual, Onboarding, Appraisals</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Leave categories, probation period, performance appraisal rating system, and employee conduct.</p>
+            <div class="space-y-1.5">
+              <button onclick="sendQuickPrompt('What is the annual leave and maternity/paternity leave entitlement in the HR Policy Manual?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-sky-400 mr-1.5"></i>Leave entitlement rules?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('What is the probation period duration and confirmation process in the HR Policy Manual?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-sky-400 mr-1.5"></i>Probation period & confirmation?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('Explain the 5-point performance rating system from the Performance Appraisal Policy.')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-sky-400 mr-1.5"></i>Performance appraisal ratings?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+            <span>Documents: 3 files</span>
+            <span class="text-sky-400 font-medium">HR Knowledge Base</span>
+          </div>
+        </div>
+
+        <!-- Financial Policies Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+          <div>
+            <div class="flex items-center space-x-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                <i class="fa-solid fa-coins text-sm"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm text-white">Financial & Budgeting</h3>
+                <span class="text-[11px] text-slate-400">Expenses, Procurement, Travel</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Reimbursement eligibility, per-diem allowances, petty cash thresholds, and approval chains.</p>
+            <div class="space-y-1.5">
+              <button onclick="sendQuickPrompt('What are the rules and maximum limits for travel expense reimbursements in Financial Policy Guidelines?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-emerald-400 mr-1.5"></i>Travel reimbursement limits?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('What are the approval thresholds for procurement and capital expenditures in Financial Guidelines?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-emerald-400 mr-1.5"></i>Procurement approval tiers?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('What is the deadline and documentation required for submitting monthly expense claims?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-emerald-400 mr-1.5"></i>Expense claim deadlines?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+            <span>Documents: 1 file</span>
+            <span class="text-emerald-400 font-medium">HR Knowledge Base</span>
+          </div>
+        </div>
+
+        <!-- Customer Support SLA Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+          <div>
+            <div class="flex items-center space-x-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center">
+                <i class="fa-solid fa-headset text-sm"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm text-white">Customer Support & SLAs</h3>
+                <span class="text-[11px] text-slate-400">Response Times, P1-P4 Severity</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Incident classification, target response/resolution windows, escalation matrix, and customer comms.</p>
+            <div class="space-y-1.5">
+              <button onclick="sendQuickPrompt('Provide a table of Severity 1 (Critical) to Severity 4 (Low) definitions and SLA times from the SLA Handbook.')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-rose-400 mr-1.5"></i>P1 to P4 Severity matrix?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('What is the escalation hierarchy for unresolved P1 incidents in Customer Support SLA Handbook?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-rose-400 mr-1.5"></i>P1 incident escalation matrix?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('What are the penalties or SLA credit provisions if resolution targets are breached?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-rose-400 mr-1.5"></i>SLA breach penalty rules?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+            <span>Documents: 1 file</span>
+            <span class="text-rose-400 font-medium">IT Knowledge Base</span>
+          </div>
+        </div>
+
+        <!-- Software Engineering Standards Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+          <div>
+            <div class="flex items-center space-x-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                <i class="fa-solid fa-code text-sm"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm text-white">Software Engineering Standards</h3>
+                <span class="text-[11px] text-slate-400">Code Reviews, Git, Python/TypeScript</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Git commit message conventions, code review approvals, unit test coverage minimums, and CI/CD.</p>
+            <div class="space-y-1.5">
+              <button onclick="sendQuickPrompt('What is the required test coverage percentage and code review process in Software Engineering Standards?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-indigo-400 mr-1.5"></i>Test coverage & code review rules?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('What are the naming conventions and formatting guidelines for Python and TypeScript code?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-indigo-400 mr-1.5"></i>Python & TypeScript conventions?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+            <span>Documents: 1 file</span>
+            <span class="text-indigo-400 font-medium">IT Knowledge Base</span>
+          </div>
+        </div>
+
+        <!-- IT Infrastructure & Troubleshooting Card -->
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all">
+          <div>
+            <div class="flex items-center space-x-3 mb-3">
+              <div class="w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center">
+                <i class="fa-solid fa-screwdriver-wrench text-sm"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm text-white">IT Troubleshooting & Guides</h3>
+                <span class="text-[11px] text-slate-400">Hardware, Network, VPN Guides</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mb-3">Step-by-step diagnostic procedures for VPN drops, printer issues, Outlook errors, and cloud infra.</p>
+            <div class="space-y-1.5">
+              <button onclick="sendQuickPrompt('What are the exact diagnostic steps for VPN error 800 and connection drops in the IT Troubleshooting Guide?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-cyan-400 mr-1.5"></i>VPN error 800 solution?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+              <button onclick="sendQuickPrompt('What is the password policy and MFA requirement in IT Support manual?')" class="w-full text-left text-[11px] bg-slate-950/60 hover:bg-slate-800 text-slate-300 p-2 rounded-lg transition-all flex items-center justify-between">
+                <span><i class="fa-solid fa-circle-question text-cyan-400 mr-1.5"></i>Password policy & MFA?</span>
+                <i class="fa-solid fa-arrow-right text-[10px] text-slate-500"></i>
+              </button>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+            <span>Documents: 3 files</span>
+            <span class="text-cyan-400 font-medium">IT Knowledge Base</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. SHAREPOINT LISTS EXPLORER TAB -->
+    <div id="view-lists" class="hidden flex-1 flex flex-col h-full overflow-hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 bg-slate-900 p-4 rounded-xl border border-slate-800">
+        <div>
+          <h2 class="text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-table-list text-sky-400"></i>
+            <span>SharePoint Data Lists</span>
+          </h2>
+          <p class="text-xs text-slate-400">Select any list from the site to browse columns and records directly.</p>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <select id="list-selector" onchange="loadSelectedList()" class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500">
+            <option value="">Loading lists...</option>
+          </select>
+          <input type="text" id="list-search-box" onkeyup="filterListTable()" placeholder="Search records..." class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500 w-44">
+        </div>
+      </div>
+
+      <!-- List Data Table Container -->
+      <div class="flex-1 overflow-auto bg-slate-900 rounded-xl border border-slate-800 p-2">
+        <div id="list-table-container" class="overflow-x-auto min-w-full">
+          <p class="text-xs text-slate-500 p-4">Select a list above to view data.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SHAREPOINT DOCUMENT LIBRARIES & UPLOAD TAB -->
+    <div id="view-libraries" class="hidden flex-1 flex flex-col h-full overflow-hidden">
+      
+      <!-- Upload Card Banner -->
+      <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-cloud-arrow-up text-sky-400"></i>
+            <span>Upload Document to SharePoint Knowledge Base</span>
+          </h2>
+          <p class="text-xs text-slate-400">Upload PDF, DOCX, or Excel documents. They will be saved to SharePoint and indexed into RAG immediately.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-2">
+          <select id="upload-drive-select" class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:border-sky-500">
+            <!-- Populated dynamically -->
+          </select>
+          <input type="file" id="upload-file-input" accept=".pdf,.docx,.doc,.xlsx,.xls,.txt,.csv" class="hidden" onchange="handleFileUpload(event)">
+          <button onclick="document.getElementById('upload-file-input').click()" id="upload-trigger-btn" class="px-4 py-2 bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white text-xs font-semibold rounded-lg shadow transition-all flex items-center space-x-1.5 whitespace-nowrap">
+            <i class="fa-solid fa-file-arrow-up"></i>
+            <span>Choose & Upload File</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="upload-progress-alert" class="hidden mb-4 p-3 bg-sky-950/60 border border-sky-800 text-sky-300 text-xs rounded-xl flex items-center space-x-2">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <span id="upload-progress-text">Uploading to SharePoint and indexing chunks...</span>
+      </div>
+
+      <!-- Libraries Cards Grid -->
+      <div id="libraries-grid" class="flex-1 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
+        <div class="text-xs text-slate-500 p-4">Loading document libraries...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Client JavaScript -->
+  <script>
+    let chatHistory = [];
+    let isGenerating = false;
+    let availableLists = [];
+    let availableLibraries = [];
+    let currentSelectedListId = null;
+
+    window.addEventListener("DOMContentLoaded", () => {
+      fetchStatus();
+      loadListsMeta();
+      loadLibrariesMeta();
+    });
+
+    // Tab Switching
+    function switchTab(tab) {
+      document.getElementById("view-chat").classList.toggle("hidden", tab !== 'chat');
+      document.getElementById("view-policy").classList.toggle("hidden", tab !== 'policy');
+      document.getElementById("view-lists").classList.toggle("hidden", tab !== 'lists');
+      document.getElementById("view-libraries").classList.toggle("hidden", tab !== 'libraries');
+
+      const btnChat = document.getElementById("tab-chat-btn");
+      const btnPolicy = document.getElementById("tab-policy-btn");
+      const btnLists = document.getElementById("tab-lists-btn");
+      const btnLibraries = document.getElementById("tab-libraries-btn");
+
+      const activeClass = "bg-sky-600 text-white shadow";
+      const inactiveClass = "text-slate-400 hover:text-white";
+
+      btnChat.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'chat' ? activeClass : inactiveClass}`;
+      btnPolicy.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'policy' ? activeClass : inactiveClass}`;
+      btnLists.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'lists' ? activeClass : inactiveClass}`;
+      btnLibraries.className = `px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 ${tab === 'libraries' ? activeClass : inactiveClass}`;
+    }
+
+    // Status Fetch
+    async function fetchStatus() {
+      try {
+        const res = await fetch("/api/status");
+        const data = await res.json();
+        const dot = document.getElementById("status-dot");
+        const text = document.getElementById("status-text");
+
+        if (data.status === "online") {
+          dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400";
+          text.textContent = `Online (${data.stats.total_list_items} items, ${data.stats.total_documents} docs, ${data.stats.indexed_chunks} RAG chunks)`;
+        } else if (data.status === "syncing") {
+          dot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
+          text.textContent = data.sync_message || "Syncing with SharePoint...";
+        } else {
+          dot.className = "w-2.5 h-2.5 rounded-full bg-rose-400";
+          text.textContent = data.sync_message || "Offline";
+        }
+      } catch (e) {
+        console.error("Status error:", e);
+      }
+    }
+
+    // Trigger Re-sync
+    async function triggerSync() {
+      const syncIcon = document.getElementById("sync-icon");
+      const statusText = document.getElementById("status-text");
+      const statusDot = document.getElementById("status-dot");
+      syncIcon.classList.add("fa-spin");
+      statusDot.className = "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
+      statusText.textContent = "Syncing from SharePoint...";
+
+      try {
+        const res = await fetch("/api/sync", { method: "POST" });
+        const data = await res.json();
+        
+        let attempts = 0;
+        const pollInterval = setInterval(async () => {
+          attempts++;
+          try {
+            const statusRes = await fetch("/api/status");
+            const sData = await statusRes.json();
+            if (sData.status === "online" || attempts > 40) {
+              clearInterval(pollInterval);
+              syncIcon.classList.remove("fa-spin");
+              statusDot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400";
+              statusText.textContent = `Online (${sData.stats.total_list_items} items, ${sData.stats.total_documents} docs, ${sData.stats.indexed_chunks} RAG chunks)`;
+              loadListsMeta();
+              loadLibrariesMeta();
+            } else {
+              statusText.textContent = sData.sync_message || "Syncing...";
+            }
+          } catch (pollErr) {
+            console.error("Poll error:", pollErr);
+          }
+        }, 1500);
+
+      } catch (e) {
+        syncIcon.classList.remove("fa-spin");
+        statusDot.className = "w-2.5 h-2.5 rounded-full bg-rose-400";
+        statusText.textContent = "Sync request failed: " + e.message;
+      }
+    }
+
+    // Poll status every 15 seconds
+    setInterval(fetchStatus, 15000);
+
+    // Quick Prompt Helper
+    function sendQuickPrompt(promptText) {
+      switchTab('chat');
+      document.getElementById("user-input").value = promptText;
+      sendMessage();
+    }
+
+    function handleKey(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    // File Upload Handler
+    async function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const driveId = document.getElementById("upload-drive-select").value;
+      const progressAlert = document.getElementById("upload-progress-alert");
+      const progressText = document.getElementById("upload-progress-text");
+      
+      progressAlert.classList.remove("hidden");
+      progressText.textContent = `Uploading "${file.name}" to SharePoint...`;
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("drive_id", driveId);
+
+      try {
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+          progressText.textContent = `Successfully uploaded "${file.name}" and indexed ${data.chunks_added} chunks!`;
+          setTimeout(() => progressAlert.classList.add("hidden"), 4000);
+          loadLibrariesMeta();
+          fetchStatus();
+        } else {
+          progressText.textContent = `Upload failed: ${data.error || "Unknown error"}`;
+        }
+      } catch (err) {
+        progressText.textContent = `Upload error: ${err.message}`;
+      } finally {
+        event.target.value = "";
+      }
+    }
+
+    // Send Chat Message with SSE Streaming
+    async function sendMessage() {
+      if (isGenerating) return;
+      const inputEl = document.getElementById("user-input");
+      const query = inputEl.value.trim();
+      if (!query) return;
+
+      inputEl.value = "";
+      inputEl.style.height = "auto";
+      isGenerating = true;
+
+      // Append user bubble
+      appendUserMessage(query);
+      chatHistory.push({ role: "user", content: query });
+
+      // Create assistant container
+      const botMsgObj = appendAssistantMessage();
+      const statusBox = document.getElementById("live-tool-status");
+      const statusText = document.getElementById("live-tool-text");
+      statusBox.classList.remove("hidden");
+      statusText.textContent = "Retrieving policy knowledge base & SharePoint lists...";
+
+      try {
+        const response = await fetch("/api/chat/stream", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: chatHistory })
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          botMsgObj.bodyEl.innerHTML = `<span class="text-rose-400">Error: ${errText}</span>`;
+          isGenerating = false;
+          statusBox.classList.add("hidden");
+          return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullAssistantText = "";
+        let collectedCitations = [];
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value, { stream: true });
+          const lines = chunk.split("\n\n");
+
+          for (const line of lines) {
+            if (!line.startsWith("data: ")) continue;
+            const payload = line.replace("data: ", "").trim();
+            if (payload === "[DONE]") break;
+
+            try {
+              const data = JSON.parse(payload);
+              if (data.status) {
+                statusText.textContent = data.status;
+              }
+              if (data.token) {
+                fullAssistantText += data.token;
+                botMsgObj.bodyEl.innerHTML = marked.parse(fullAssistantText);
+                botMsgObj.bodyEl.classList.add("typing-cursor");
+                scrollToBottom();
+              }
+              if (data.citations && data.citations.length > 0) {
+                collectedCitations = data.citations;
+              }
+              if (data.error) {
+                fullAssistantText += `\n\n> ⚠️ **Error**: ${data.error}`;
+                botMsgObj.bodyEl.innerHTML = marked.parse(fullAssistantText);
+              }
+            } catch (err) {
+              console.error("Parse line error:", err);
+            }
+          }
+        }
+
+        botMsgObj.bodyEl.classList.remove("typing-cursor");
+        botMsgObj.bodyEl.innerHTML = marked.parse(fullAssistantText || "No response received.");
+        
+        // Syntax highlighting
+        botMsgObj.bodyEl.querySelectorAll("pre code").forEach(el => hljs.highlightElement(el));
+
+        // Render Citations with document links
+        if (collectedCitations.length > 0) {
+          const citationsContainer = document.createElement("div");
+          citationsContainer.className = "mt-3 pt-2.5 border-t border-slate-800 text-xs flex flex-wrap items-center gap-1.5";
+          citationsContainer.innerHTML = `<span class="text-slate-400 font-semibold mr-1"><i class="fa-solid fa-bookmark text-sky-400 mr-1"></i>Sources & Clauses:</span>`;
+          
+          const uniqueCitations = Array.from(new Set(collectedCitations.map(c => JSON.stringify(c))));
+          uniqueCitations.forEach(cStr => {
+            const c = JSON.parse(cStr);
+            const pill = document.createElement(c.url ? "a" : "span");
+            if (c.url) {
+              pill.href = c.url;
+              pill.target = "_blank";
+            }
+            pill.className = "bg-slate-800/90 text-sky-300 border border-slate-700 px-2 py-0.5 rounded-md text-[11px] font-mono flex items-center space-x-1 hover:border-sky-500/50 transition-colors";
+            pill.innerHTML = `<i class="fa-regular fa-file-lines text-[10px]"></i><span>${c.source}</span>`;
+            citationsContainer.appendChild(pill);
+          });
+          botMsgObj.bubbleEl.appendChild(citationsContainer);
+        }
+
+        chatHistory.push({ role: "assistant", content: fullAssistantText });
+
+      } catch (err) {
+        botMsgObj.bodyEl.innerHTML = `<span class="text-rose-400">Failed to connect: ${err.message}</span>`;
+      } finally {
+        isGenerating = false;
+        statusBox.classList.add("hidden");
+        scrollToBottom();
+      }
+    }
+
+    function appendUserMessage(text) {
+      const chatContainer = document.getElementById("chat-messages");
+      const div = document.createElement("div");
+      div.className = "flex items-start justify-end space-x-3";
+      div.innerHTML = `
+        <div class="bg-gradient-to-r from-sky-600 to-indigo-600 text-white rounded-2xl rounded-tr-none px-4 py-2.5 max-w-[80%] shadow text-sm">
+          ${text.replace(/\n/g, '<br/>')}
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0 mt-1">
+          <i class="fa-solid fa-user text-xs"></i>
+        </div>
+      `;
+      chatContainer.appendChild(div);
+      scrollToBottom();
+    }
+
+    function appendAssistantMessage() {
+      const chatContainer = document.getElementById("chat-messages");
+      const div = document.createElement("div");
+      div.className = "flex items-start space-x-3";
+      
+      const bubble = document.createElement("div");
+      bubble.className = "flex-1 bg-slate-900 border border-slate-800 rounded-2xl p-4 text-slate-200 shadow-sm max-w-[95%]";
+
+      const header = document.createElement("div");
+      header.className = "font-bold text-sm text-sky-400 mb-1 flex items-center space-x-2";
+      header.innerHTML = `<span>SharePoint Policy AI</span>`;
+
+      const body = document.createElement("div");
+      body.className = "markdown-body typing-cursor";
+      body.innerHTML = "<p class='text-slate-400 italic text-xs'>Searching corporate policies and knowledge bases...</p>";
+
+      bubble.appendChild(header);
+      bubble.appendChild(body);
+
+      div.innerHTML = `
+        <div class="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white shrink-0 mt-1 shadow-md">
+          <i class="fa-solid fa-robot text-sm"></i>
+        </div>
+      `;
+      div.appendChild(bubble);
+      chatContainer.appendChild(div);
+      scrollToBottom();
+
+      return { bubbleEl: bubble, bodyEl: body };
+    }
+
+    function scrollToBottom() {
+      const container = document.getElementById("chat-messages");
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function clearChat() {
+      chatHistory = [];
+      const chatContainer = document.getElementById("chat-messages");
+      chatContainer.innerHTML = "";
+    }
+
+    // --- LISTS EXPLORER LOGIC ---
+    async function loadListsMeta() {
+      try {
+        const res = await fetch("/api/lists");
+        const data = await res.json();
+        availableLists = data.lists || [];
+        const selector = document.getElementById("list-selector");
+        selector.innerHTML = `<option value="">-- Choose a SharePoint List --</option>`;
+        
+        availableLists.forEach(l => {
+          const opt = document.createElement("option");
+          opt.value = l.id;
+          opt.textContent = `${l.name} (${l.item_count} items)`;
+          selector.appendChild(opt);
+        });
+
+        const def = availableLists.find(l => l.name === "Employee Details") || availableLists[0];
+        if (def) {
+          selector.value = def.id;
+          loadSelectedList();
+        }
+      } catch (e) {
+        console.error("Lists meta error:", e);
+      }
+    }
+
+    async function loadSelectedList() {
+      const listId = document.getElementById("list-selector").value;
+      if (!listId) return;
+      currentSelectedListId = listId;
+
+      const container = document.getElementById("list-table-container");
+      container.innerHTML = `<p class="text-xs text-sky-400 p-4"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>Loading items...</p>`;
+
+      try {
+        const res = await fetch(`/api/lists/${listId}/items?limit=50`);
+        const data = await res.json();
+        renderListTable(data.items);
+      } catch (e) {
+        container.innerHTML = `<p class="text-xs text-rose-400 p-4">Failed to load items: ${e.message}</p>`;
+      }
+    }
+
+    function renderListTable(items) {
+      const container = document.getElementById("list-table-container");
+      if (!items || items.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-500 p-4">No records found in this list.</p>`;
+        return;
+      }
+
+      const sampleFields = {};
+      items.forEach(it => {
+        Object.keys(it.fields || {}).forEach(k => {
+          if (!k.startsWith("@") && !k.startsWith("_") && !["Edit", "ItemChildCount", "FolderChildCount"].includes(k)) {
+            sampleFields[k] = true;
+          }
+        });
+      });
+      const columns = Object.keys(sampleFields);
+
+      let html = `<table class="min-w-full text-xs text-left border-collapse">`;
+      html += `<thead><tr class="bg-slate-950 border-b border-slate-800 text-sky-400">`;
+      columns.forEach(col => {
+        html += `<th class="p-2.5 font-semibold whitespace-nowrap">${col}</th>`;
+      });
+      html += `</tr></thead><tbody>`;
+
+      items.forEach((it, idx) => {
+        const bg = idx % 2 === 0 ? "bg-slate-900/60" : "bg-slate-900/20";
+        html += `<tr class="${bg} border-b border-slate-800/60 hover:bg-slate-800/50 transition-colors">`;
+        columns.forEach(col => {
+          const val = it.fields[col] !== undefined ? String(it.fields[col]) : "";
+          html += `<td class="p-2.5 text-slate-300 max-w-xs truncate" title="${val}">${val}</td>`;
+        });
+        html += `</tr>`;
+      });
+
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+    }
+
+    async function filterListTable() {
+      if (!currentSelectedListId) return;
+      const q = document.getElementById("list-search-box").value.trim();
+      const res = await fetch(`/api/lists/${currentSelectedListId}/items?q=${encodeURIComponent(q)}&limit=50`);
+      const data = await res.json();
+      renderListTable(data.items);
+    }
+
+    // --- DOCUMENT LIBRARIES LOGIC ---
+    async function loadLibrariesMeta() {
+      try {
+        const res = await fetch("/api/libraries");
+        const data = await res.json();
+        availableLibraries = data.libraries || [];
+        const grid = document.getElementById("libraries-grid");
+        const driveSelect = document.getElementById("upload-drive-select");
+        
+        grid.innerHTML = "";
+        driveSelect.innerHTML = "";
+
+        if (!availableLibraries || availableLibraries.length === 0) {
+          grid.innerHTML = `<p class="text-xs text-slate-500 p-4">No document libraries found.</p>`;
+          return;
+        }
+
+        availableLibraries.forEach(lib => {
+          // Add to upload drive select
+          const opt = document.createElement("option");
+          opt.value = lib.id;
+          opt.textContent = `Upload to: ${lib.name}`;
+          driveSelect.appendChild(opt);
+
+          // Card
+          const card = document.createElement("div");
+          card.className = "bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all";
+
+          let filesHtml = "";
+          if (lib.files && lib.files.length > 0) {
+            lib.files.forEach(f => {
+              const icon = f.name.endsWith(".pdf") ? "fa-file-pdf text-rose-400" : (f.name.endsWith(".docx") ? "fa-file-word text-blue-400" : (f.name.endsWith(".xlsx") ? "fa-file-excel text-emerald-400" : "fa-file-lines text-slate-400"));
+              const sizeKb = Math.round(f.size / 1024);
+              filesHtml += `
+                <li class="flex items-center justify-between py-2 border-b border-slate-800/60 last:border-0 text-xs">
+                  <div class="flex items-center space-x-2 truncate">
+                    <i class="fa-solid ${icon}"></i>
+                    <span class="truncate text-slate-300 font-medium" title="${f.name}">${f.name}</span>
+                  </div>
+                  <div class="flex items-center space-x-2 shrink-0 ml-2">
+                    <span class="text-[10px] text-slate-500">${sizeKb} KB</span>
+                    <button onclick="sendQuickPrompt('Summarize the key sections, rules and policies from ${f.name}')" title="Ask AI about this policy" class="text-sky-400 hover:text-sky-300 px-1.5 py-0.5 rounded bg-slate-800">
+                      <i class="fa-solid fa-sparkles text-[10px]"></i>
+                    </button>
+                  </div>
+                </li>
+              `;
+            });
+          } else {
+            filesHtml = `<li class="text-xs text-slate-500 italic py-2">No files in library.</li>`;
+          }
+
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="font-bold text-sm text-white flex items-center space-x-2">
+                  <i class="fa-regular fa-folder-closed text-sky-400"></i>
+                  <span>${lib.name}</span>
+                </h3>
+                <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+                  ${lib.file_count} files
+                </span>
+              </div>
+              <ul class="my-3 space-y-1">
+                ${filesHtml}
+              </ul>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-800 flex items-center justify-between">
+              <button onclick="sendQuickPrompt('Summarize the policies and documents in ${lib.name}')" class="text-xs text-sky-400 hover:text-sky-300 font-medium flex items-center space-x-1">
+                <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+                <span>Ask AI About Library</span>
+              </button>
+              ${lib.webUrl ? `<a href="${lib.webUrl}" target="_blank" class="text-xs text-slate-500 hover:text-slate-300"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        console.error("Libraries meta error:", e);
+      }
+    }
+  </script>
+</body>
+</html>
